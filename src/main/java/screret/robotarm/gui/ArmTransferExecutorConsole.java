@@ -111,7 +111,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
         super.detectAndSendChanges();
         var latestOps = executor.getOps();
         if (lastOps.size() != latestOps.size() || !lastOps.equals(latestOps)) {
-            lastOps.clear();;
+            lastOps.clear();
             lastOps.addAll(latestOps);
             writeUpdateInfo(0, this::writeOps);
             reloadOpList();
@@ -156,7 +156,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
                 }
                 lastOps.set(selectedIndex, newOP);
             }
-        }).setPredicate(() -> getSelected() != null && selectedPosFace != null).setHoverTooltips("robot_arm.gui.arm_console.set_as_source"));
+        }, () -> getSelected() != null && selectedPosFace != null).setHoverTooltips("robot_arm.gui.arm_console.set_as_source"));
         addWidget(new PredicatedButtonWidget(6, 6 + 22, 18, 18, new GuiTextureGroup(ColorPattern.T_GRAY.rectTexture(), ColorPattern.GRAY.borderTexture(1), IO.IN.getIcon()), (cd) -> {
             var selected = getSelected();
             if (selected != null && selectedPosFace != null) {
@@ -166,7 +166,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
                 }
                 lastOps.set(selectedIndex, newOP);
             }
-        }).setPredicate(() -> getSelected() != null && selectedPosFace != null).setHoverTooltips("robot_arm.gui.arm_console.set_as_target"));
+        }, () -> getSelected() != null && selectedPosFace != null).setHoverTooltips("robot_arm.gui.arm_console.set_as_target"));
 
         // buttons
         addWidget(new ToggleButtonWidget(2, 100, 18, 18, TransferMode.TRANSFER_EXACT.getIcon(), executor::isBlockMode, executor::setBlockMode)
@@ -187,7 +187,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
             if (!isRemote() && lastOps.size() < executor.getMaxOpCount()) {
                 executor.addOp(ArmTransferOP.of(new BlockPosFace(executor.getMachine().getPos(), Direction.UP), new BlockPosFace(executor.getMachine().getPos(), Direction.DOWN)));
             }
-        }).setPredicate(() -> lastOps.size() < executor.getMaxOpCount()).setHoverTooltips("robot_arm.gui.arm_console.add_op"));
+        }, () -> lastOps.size() < executor.getMaxOpCount()).setHoverTooltips("robot_arm.gui.arm_console.add_op"));
         // remove
         addWidget(new PredicatedButtonWidget(getSize().width - 20 * 3, 100, 18, 18, new GuiTextureGroup(GuiTextures.BUTTON, Icons.REMOVE.copy().scale(0.85f)), (cd) -> {
             if (!isRemote()) {
@@ -197,7 +197,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
                 }
             }
             selectedIndex = -1;
-        }).setPredicate(() -> getSelected() != null).setHoverTooltips("robot_arm.gui.arm_console.remove_op"));
+        }, () -> getSelected() != null).setHoverTooltips("robot_arm.gui.arm_console.remove_op"));
         // move up
         addWidget(new PredicatedButtonWidget(getSize().width - 20 * 2, 100, 18, 18, new GuiTextureGroup(GuiTextures.BUTTON, Icons.UP.copy().scale(0.85f)), (cd) -> {
             if (selectedIndex > 0 && selectedIndex < lastOps.size()) {
@@ -217,7 +217,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
                 opList.widgets.set(selectedIndex - 1, selectedGroup);
                 selectedIndex--;
             }
-        }).setPredicate(() -> selectedIndex > 0 && selectedIndex < lastOps.size()).setHoverTooltips("robot_arm.gui.arm_console.move_up"));
+        }, () -> selectedIndex > 0 && selectedIndex < lastOps.size()).setHoverTooltips("robot_arm.gui.arm_console.move_up"));
         // move down
         addWidget(new PredicatedButtonWidget(getSize().width - 20, 100, 18, 18, new GuiTextureGroup(GuiTextures.BUTTON, Icons.DOWN.copy().scale(0.85f)), (cd) -> {
             if (selectedIndex < lastOps.size() - 1 && selectedIndex >= 0) {
@@ -237,7 +237,7 @@ public class ArmTransferExecutorConsole extends WidgetGroup {
                 opList.widgets.set(selectedIndex + 1, selectedGroup);
                 selectedIndex++;
             }
-        }).setPredicate(() -> selectedIndex < lastOps.size() - 1 && selectedIndex >= 0).setHoverTooltips("robot_arm.gui.arm_console.move_down"));
+        }, () -> selectedIndex < lastOps.size() - 1 && selectedIndex >= 0).setHoverTooltips("robot_arm.gui.arm_console.move_down"));
 
         // op list
         opList = new DraggableScrollableWidgetGroup(2, 120, getSize().width - 4, getSize().height - 20 - 120);
