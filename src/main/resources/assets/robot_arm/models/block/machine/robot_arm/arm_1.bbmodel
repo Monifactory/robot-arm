@@ -1,0 +1,236 @@
+{
+	"meta": {
+		"format_version": "4.9",
+		"model_format": "java_block",
+		"box_uv": false
+	},
+	"name": "arm_1",
+	"parent": "",
+	"ambientocclusion": true,
+	"front_gui_light": false,
+	"visible_box": [1, 1, 0],
+	"variable_placeholders": "",
+	"variable_placeholder_buttons": [],
+	"unhandled_root_fields": {},
+	"resolution": {
+		"width": 64,
+		"height": 64
+	},
+	"elements": [
+		{
+			"name": "cube",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [5, 3, -2],
+			"to": [6, 7, 14],
+			"autouv": 0,
+			"color": 0,
+			"origin": [8, 5, 3.25],
+			"faces": {
+				"north": {
+					"uv": [8.5, 4, 9, 5.71429]
+				},
+				"east": {
+					"uv": [0, 18, 16, 22],
+					"texture": 0
+				},
+				"south": {
+					"uv": [17, 18, 18, 22],
+					"texture": 0
+				},
+				"west": {
+					"uv": [0, 14, 16, 18],
+					"texture": 0
+				},
+				"up": {
+					"uv": [0, 22, 17, 23],
+					"rotation": 90,
+					"texture": 0
+				},
+				"down": {
+					"uv": [0, 22, 17, 23],
+					"rotation": 90,
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "e98aca74-18c0-4725-f641-0ace0b7fae70"
+		},
+		{
+			"name": "cube",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [10, 3, -2],
+			"to": [11, 7, 14],
+			"autouv": 0,
+			"color": 0,
+			"origin": [8, 5, 3.25],
+			"faces": {
+				"north": {
+					"uv": [17, 18, 18, 22],
+					"texture": 0
+				},
+				"east": {
+					"uv": [0, 14, 16, 18],
+					"texture": 0
+				},
+				"south": {
+					"uv": [17, 18, 18, 22],
+					"texture": 0
+				},
+				"west": {
+					"uv": [0, 18, 16, 22],
+					"texture": 0
+				},
+				"up": {
+					"uv": [0, 22, 17, 23],
+					"rotation": 90,
+					"texture": 0
+				},
+				"down": {
+					"uv": [0, 22, 17, 23],
+					"rotation": 90,
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "8d638184-bc2c-7377-2724-85c6be87a651"
+		},
+		{
+			"name": "cube",
+			"box_uv": false,
+			"rescale": false,
+			"locked": false,
+			"render_order": "default",
+			"allow_mirror_modeling": true,
+			"from": [4, 4, -1],
+			"to": [12, 6, 1],
+			"autouv": 0,
+			"color": 0,
+			"origin": [8, 5, 3.25],
+			"faces": {
+				"north": {
+					"uv": [17, 14, 25, 16],
+					"texture": 0
+				},
+				"east": {
+					"uv": [17, 16, 19, 18],
+					"texture": 0
+				},
+				"south": {
+					"uv": [17, 14, 25, 16],
+					"texture": 0
+				},
+				"west": {
+					"uv": [17, 16, 19, 18],
+					"texture": 0
+				},
+				"up": {
+					"uv": [17, 14, 25, 16],
+					"texture": 0
+				},
+				"down": {
+					"uv": [17, 14, 25, 16],
+					"texture": 0
+				}
+			},
+			"type": "cube",
+			"uuid": "294d4d4e-6368-508d-518f-446626f1f0c1"
+		}
+	],
+	"outliner": [
+		{
+			"name": "arm1",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"uuid": "6cb3dc04-8a0b-7549-0357-56a98d071bbd",
+			"export": true,
+			"mirror_uv": false,
+			"isOpen": true,
+			"locked": false,
+			"visibility": true,
+			"autouv": 0,
+			"children": [
+				{
+					"name": "arm1Left",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "5c1cbae2-a046-2dc7-7487-87124adcb526",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": true,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"children": ["e98aca74-18c0-4725-f641-0ace0b7fae70"]
+				},
+				{
+					"name": "arm2Right",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "7b1f8658-a84d-1f99-6edb-912c8b15ae15",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": true,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"children": ["8d638184-bc2c-7377-2724-85c6be87a651"]
+				},
+				{
+					"name": "axisX",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"uuid": "e327c556-c6c6-508b-ec91-e908629dec3b",
+					"export": true,
+					"mirror_uv": false,
+					"isOpen": true,
+					"locked": false,
+					"visibility": true,
+					"autouv": 0,
+					"children": ["294d4d4e-6368-508d-518f-446626f1f0c1"]
+				}
+			]
+		}
+	],
+	"textures": [
+		{
+			"path": "C:\\Users\\OMISTAJA\\Downloads\\robot_arm\\robot_arm.png",
+			"name": "robot_arm",
+			"folder": "block",
+			"namespace": "gtceu",
+			"id": "0",
+			"width": 64,
+			"height": 64,
+			"uv_width": 64,
+			"uv_height": 64,
+			"particle": false,
+			"layers_enabled": false,
+			"sync_to_project": "",
+			"render_mode": "default",
+			"render_sides": "auto",
+			"frame_time": 1,
+			"frame_order_type": "loop",
+			"frame_order": "",
+			"frame_interpolate": false,
+			"visible": true,
+			"internal": true,
+			"saved": true,
+			"uuid": "de6e8913-2cc5-a8dd-be33-4a59c5473f5c",
+			"relative_path": "../robot_arm.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA8NJREFUeF7tmktoE0EYx2elWktbfLaJttE+EBUFD4r2IoipUkW8qCj0IB58nAStUCgeRKQq1YAHLx4EDwGLBUEK1mIkeKqHHqT1IKVNa6w0VqRYq/UZ+SbZMLuZ2cxsds1OOnspu/3m9Zv/99jZaPOjF5MofS1tDGlw/7t7Naro6ND05187OzM2+rPo4Va050lYv8V/T458Ntxb3TzYsNIwBndDhw3xgktrNqIfk2+RFYDy+nWZoedi75AOQH8OzxQAkwJmrq/B0CL+toyaSFWRKnN4Y7m7c1UBRQXAjBR2D2KDlQuEL/+l7gS4GrSVRgFHTl3KCoKwMghk5EWLAWYbfdGeBaBHfHJ3WADMO9x6bVHWjhc9AMggcEEWYQEg3cSTCiDrAFEFSA+gd3jC4N+Htq7PSlkAKDh122B34dNR1Fx2B5EAILiZfcBcRHkh8JFz1EQANPmqcduBxEekAyA7owHgTsgFMswLAEstBVqLrWGFAJAjgAIWFABbeCVopJmDm505gxqsLi8rBQPQg5udxesBcUEDeO5vw+vXENKSx1Nls9Z9y5ASWc/tQHeyjSMuIDUA2mmPKOGzO8+jcHMF3nHpFEC+0oouHOzhJEgBkF0BdnaebCO1ApyoA8gzP+liAOuwg6YKngOQnm+pltKkQVEAud7/wzt6qB5V+jJVLT47c9DS41qCe6mv4/m6Kau9lg8AvVPyJAgALF5bZxjv14dxRAJoqK+nzmcsFkOeB0CbudQARKTFczpcsuyeXApwCgAcfEJRxAIQ3XQ/M5SnXEAEAMuWLKelA+C7OkL96GEXzMSqfVQX8KwCAECtnx6VRSG8n4ohBUApQLmAigG0SlAFQZt1wFBvjaNZyhzYNa9nAQBQWeUOg9lpDSkAMihAtB4Rsfe8AgLtw+7oP01JCgDx7VtENpXbNjD4xvsxABQgHQDaFpB1gNUWmU+EpAPwZWgQr+/7oxOGs72+yAvsy6GuLkuJ9vc9NbQrSgA+n48KIZFIIAVAKaBIXUDX/P6WA0nPuQB34uQwZAVBzwKYv1vnaKW1InqDmgUUgDQBcAErIf33LFD7areQAuKhXXj+f66kvgGWbB435O2yYw9xf4/PpX5Vmu91ur8auVoJAoDKwHKuec7GZ5AIANYHEK7BEELwrVABUApQLuB+DOD1SbATiQEi/bJsXY8BTWMRoSyQa1Gv26exybabVblMDf8faAhSfxni+tsgAGgs/yk0WZbx6NwSRALg7RfaKQBKAcoFChcDHAkA6U7cCIJOzs/c1z80LWmpkSuwEAAAAABJRU5ErkJggg=="
+		}
+	],
+	"display": {
+		"gui": {
+			"rotation": [45, 45, 0],
+			"scale": [0.6, 0.6, 0.6]
+		}
+	}
+}

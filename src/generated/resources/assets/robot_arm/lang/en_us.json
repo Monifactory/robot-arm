@@ -1,0 +1,20 @@
+{
+  "block.robot_arm.robot_arm": "Robot Arm",
+  "robot_arm.gui.arm_console.add_op": "Add operation",
+  "robot_arm.gui.arm_console.block_mode.disabled": "Block Mode §4Disabled§r (check compass for more details)",
+  "robot_arm.gui.arm_console.block_mode.enabled": "Block Mode §eEnabled§r (check compass for more details)",
+  "robot_arm.gui.arm_console.move_down": "Move down",
+  "robot_arm.gui.arm_console.move_up": "Move up",
+  "robot_arm.gui.arm_console.queue": "Pending queue",
+  "robot_arm.gui.arm_console.random_mode.disabled": "Random Mode §4Disabled§r (check compass for more details)",
+  "robot_arm.gui.arm_console.random_mode.enabled": "Random Mode §eEnabled§r (check compass for more details)",
+  "robot_arm.gui.arm_console.remove_op": "Remove operation",
+  "robot_arm.gui.arm_console.reset_mode.disabled": "Reset Mode §4Disabled§r (check compass for more details)",
+  "robot_arm.gui.arm_console.reset_mode.enabled": "Reset Mode §eEnabled§r (check compass for more details)",
+  "robot_arm.gui.arm_console.reset_queue": "Reset pending queue",
+  "robot_arm.gui.arm_console.set_as_source": "Set as source",
+  "robot_arm.gui.arm_console.set_as_target": "Set as target",
+  "robot_arm.gui.arm_console.transfer_amount.0": "Transfer amount",
+  "robot_arm.gui.arm_console.transfer_amount.1": "§e-1 - as many as possible§r",
+  "robot_arm.gui.arm_console.transfer_amount.2": "§e>0 - exact amount§r"
+}

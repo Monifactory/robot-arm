@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "screret.robotarm.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "GTItemsMixin",
+    "UCMCoverItemsMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

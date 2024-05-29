@@ -1,0 +1,20 @@
+{
+  "block.robot_arm.robot_arm": "ɯɹⱯ ʇoqoᴚ",
+  "robot_arm.gui.arm_console.add_op": "uoıʇɐɹǝdo ppⱯ",
+  "robot_arm.gui.arm_console.block_mode.disabled": ")sןıɐʇǝp ǝɹoɯ ɹoɟ ssɐdɯoɔ ʞɔǝɥɔ( ɹ§pǝןqɐsıᗡㄣ§ ǝpoW ʞɔoןᗺ",
+  "robot_arm.gui.arm_console.block_mode.enabled": ")sןıɐʇǝp ǝɹoɯ ɹoɟ ssɐdɯoɔ ʞɔǝɥɔ( ɹ§pǝןqɐuƎǝ§ ǝpoW ʞɔoןᗺ",
+  "robot_arm.gui.arm_console.move_down": "uʍop ǝʌoW",
+  "robot_arm.gui.arm_console.move_up": "dn ǝʌoW",
+  "robot_arm.gui.arm_console.queue": "ǝnǝnb buıpuǝԀ",
+  "robot_arm.gui.arm_console.random_mode.disabled": ")sןıɐʇǝp ǝɹoɯ ɹoɟ ssɐdɯoɔ ʞɔǝɥɔ( ɹ§pǝןqɐsıᗡㄣ§ ǝpoW ɯopuɐᴚ",
+  "robot_arm.gui.arm_console.random_mode.enabled": ")sןıɐʇǝp ǝɹoɯ ɹoɟ ssɐdɯoɔ ʞɔǝɥɔ( ɹ§pǝןqɐuƎǝ§ ǝpoW ɯopuɐᴚ",
+  "robot_arm.gui.arm_console.remove_op": "uoıʇɐɹǝdo ǝʌoɯǝᴚ",
+  "robot_arm.gui.arm_console.reset_mode.disabled": ")sןıɐʇǝp ǝɹoɯ ɹoɟ ssɐdɯoɔ ʞɔǝɥɔ( ɹ§pǝןqɐsıᗡㄣ§ ǝpoW ʇǝsǝᴚ",
+  "robot_arm.gui.arm_console.reset_mode.enabled": ")sןıɐʇǝp ǝɹoɯ ɹoɟ ssɐdɯoɔ ʞɔǝɥɔ( ɹ§pǝןqɐuƎǝ§ ǝpoW ʇǝsǝᴚ",
+  "robot_arm.gui.arm_console.reset_queue": "ǝnǝnb buıpuǝd ʇǝsǝᴚ",
+  "robot_arm.gui.arm_console.set_as_source": "ǝɔɹnos sɐ ʇǝS",
+  "robot_arm.gui.arm_console.set_as_target": "ʇǝbɹɐʇ sɐ ʇǝS",
+  "robot_arm.gui.arm_console.transfer_amount.0": "ʇunoɯɐ ɹǝɟsuɐɹ⟘",
+  "robot_arm.gui.arm_console.transfer_amount.1": "ɹ§ǝןqıssod sɐ ʎuɐɯ sɐ - Ɩ-ǝ§",
+  "robot_arm.gui.arm_console.transfer_amount.2": "ɹ§ʇunoɯɐ ʇɔɐxǝ - 0>ǝ§"
+}
