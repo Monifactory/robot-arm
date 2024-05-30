@@ -1,0 +1,7 @@
+# All other changes require the primary team
+*
+
+# Specific files requiring admin approval
+CODEOWNERS @screret
+LICENSE @screret
+README.md @screret
