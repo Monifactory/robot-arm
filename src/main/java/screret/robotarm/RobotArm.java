@@ -14,6 +14,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import screret.robotarm.data.block.RobotArmBlocks;
+import screret.robotarm.data.blockentity.RobotArmBlockEntities;
+import screret.robotarm.data.creativetab.RobotArmCreativeModeTabs;
+import screret.robotarm.data.entity.RobotArmEntities;
+import screret.robotarm.data.item.RobotArmItems;
 import screret.robotarm.data.lang.LangHandler;
 import screret.robotarm.data.machine.RobotArmMachines;
 import screret.robotarm.data.model.RobotArmPartialModels;
@@ -24,18 +29,21 @@ public class RobotArm {
     public static final Logger LOGGER = LogManager.getLogger();
     public static GTRegistrate REGISTRATE = GTRegistrate.create(RobotArm.MOD_ID);
 
+    static {
+        REGISTRATE.creativeModeTab(() -> RobotArmCreativeModeTabs.CREATIVE_TAB);
+    }
+
     public RobotArm() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
-
-        // Most other events are fired on Forge's bus.
-        // If we want to use annotations to register event listeners,
-        // we need to register our object like this!
         MinecraftForge.EVENT_BUS.register(this);
 
+        RobotArmBlocks.init();
+        RobotArmBlockEntities.init();
+        RobotArmEntities.init();
+        RobotArmItems.init();
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangHandler::init);
-
         REGISTRATE.registerEventListeners(modEventBus);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
