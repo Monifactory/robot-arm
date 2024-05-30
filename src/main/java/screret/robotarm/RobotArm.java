@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import screret.robotarm.data.lang.LangHandler;
 import screret.robotarm.data.machine.RobotArmMachines;
-import screret.robotarm.data.model.GTPartialModels;
+import screret.robotarm.data.model.RobotArmPartialModels;
 
 @Mod(RobotArm.MOD_ID)
 public class RobotArm {
@@ -40,7 +40,7 @@ public class RobotArm {
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             if (LDLib.isModLoaded("flywheel")) {
-                GTPartialModels.init();
+                RobotArmPartialModels.init();
             }
         });
     }

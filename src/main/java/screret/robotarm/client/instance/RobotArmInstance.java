@@ -12,7 +12,7 @@ import com.mojang.math.Axis;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import screret.robotarm.machine.RobotArmMachine;
 
-import static screret.robotarm.data.model.GTPartialModels.*;
+import static screret.robotarm.data.model.RobotArmPartialModels.*;
 
 
 public class RobotArmInstance extends BlockEntityInstance<BlockEntity> implements DynamicInstance {
