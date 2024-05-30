@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "gtceu:block/amhs/foup_rail_inner",
-		"1": "gtceu:block/amhs/foup_signal_light",
-		"2": "gtceu:block/amhs/foup_straight_rail",
-		"particle": "gtceu:block/amhs/foup_rail_inner"
+		"0": "robot_arm:block/amhs/foup_rail_inner",
+		"1": "robot_arm:block/amhs/foup_signal_light",
+		"2": "robot_arm:block/amhs/foup_straight_rail",
+		"particle": "robot_arm:block/amhs/foup_rail_inner"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"1": "gtceu:block/amhs/foup_sling",
-		"particle": "gtceu:block/amhs/foup_sling"
+		"1": "robot_arm:block/amhs/foup_sling",
+		"particle": "robot_arm:block/amhs/foup_sling"
 	},
 	"elements": [
 		{

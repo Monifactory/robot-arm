@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
 import screret.robotarm.entity.FOUPCartEntity;
 import screret.robotarm.pipenet.amhs.AMHSRailNet;
@@ -128,13 +129,17 @@ public class MoveOp extends FOUPOp {
     @Override
     public CompoundTag serializeNBT() {
         var tag = super.serializeNBT();
-        tag.put("dest", NbtUtils.writeBlockPos(destination));
+        if (destination != null) {
+            tag.put("dest", NbtUtils.writeBlockPos(destination));
+        }
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag compoundTag) {
         super.deserializeNBT(compoundTag);
-        destination = NbtUtils.readBlockPos(compoundTag.getCompound("dest"));
+        if (compoundTag.contains("dest", Tag.TAG_COMPOUND)) {
+            destination = NbtUtils.readBlockPos(compoundTag.getCompound("dest"));
+        }
     }
 }

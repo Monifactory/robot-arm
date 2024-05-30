@@ -1,8 +1,8 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "gtceu:blocks/robot_arm",
-		"particle": "gtceu:blocks/robot_arm"
+		"0": "robot_arm:blocks/robot_arm",
+		"particle": "robot_arm:blocks/robot_arm"
 	},
 	"elements": [
 		{
