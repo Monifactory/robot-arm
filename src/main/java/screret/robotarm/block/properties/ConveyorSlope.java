@@ -13,9 +13,8 @@ public enum ConveyorSlope implements StringRepresentable {
 
     public BlockPos getOffsetPos(BlockPos pos) {
         return switch (this) {
-            case UP -> pos.relative(Direction.UP);
-            case NONE -> pos;
-            case DOWN -> pos.relative(Direction.DOWN);
+            case UP -> pos.above();
+            case NONE, DOWN -> pos;
         };
     }
 

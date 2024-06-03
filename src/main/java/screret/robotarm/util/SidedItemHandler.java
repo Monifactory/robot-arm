@@ -1,17 +1,17 @@
 package screret.robotarm.util;
 
+import com.lowdragmc.lowdraglib.side.item.IItemTransfer;
 import lombok.AllArgsConstructor;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiPredicate;
 
 @AllArgsConstructor
-public class SidedItemHandler implements IItemHandlerModifiable {
+public class SidedItemHandler implements IItemTransfer {
 
-    private final IItemHandlerModifiable delegate;
+    private final IItemTransfer delegate;
     private final Direction side;
     private final BiPredicate<Direction, Integer> slotPredicate;
 
@@ -20,6 +20,15 @@ public class SidedItemHandler implements IItemHandlerModifiable {
         if (slotPredicate.test(side, i)) {
             delegate.setStackInSlot(i, arg);
         }
+    }
+
+    @NotNull
+    @Override
+    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate, boolean notifyChanges) {
+        if (slotPredicate.test(side, slot)) {
+            return delegate.insertItem(slot, stack, simulate, notifyChanges);
+        }
+        return stack;
     }
 
     @Override
@@ -35,18 +44,11 @@ public class SidedItemHandler implements IItemHandlerModifiable {
         return ItemStack.EMPTY;
     }
 
+    @NotNull
     @Override
-    public @NotNull ItemStack insertItem(int i, @NotNull ItemStack arg, boolean bl) {
-        if (slotPredicate.test(side, i)) {
-            return delegate.insertItem(i, arg, bl);
-        }
-        return arg;
-    }
-
-    @Override
-    public @NotNull ItemStack extractItem(int i, int j, boolean bl) {
-        if (slotPredicate.test(side, i)) {
-            return delegate.extractItem(i, j, bl);
+    public ItemStack extractItem(int slot, int amount, boolean simulate, boolean notifyChanges) {
+        if (slotPredicate.test(side, slot)) {
+            return delegate.extractItem(slot, amount, simulate, notifyChanges);
         }
         return ItemStack.EMPTY;
     }
@@ -59,5 +61,16 @@ public class SidedItemHandler implements IItemHandlerModifiable {
     @Override
     public boolean isItemValid(int i, @NotNull ItemStack arg) {
         return slotPredicate.test(side, i);
+    }
+
+    @NotNull
+    @Override
+    public Object createSnapshot() {
+        return new Object();
+    }
+
+    @Override
+    public void restoreFromSnapshot(Object snapshot) {
+
     }
 }

@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "enabled=false,facing=east,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 270
+    },
+    "enabled=false,facing=east,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 270
+    },
+    "enabled=false,facing=east,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 270
+    },
+    "enabled=false,facing=north,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 180
+    },
+    "enabled=false,facing=north,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 180
+    },
+    "enabled=false,facing=north,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 180
+    },
+    "enabled=false,facing=south,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off"
+    },
+    "enabled=false,facing=south,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_off"
+    },
+    "enabled=false,facing=south,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off"
+    },
+    "enabled=false,facing=west,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 90
+    },
+    "enabled=false,facing=west,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 90
+    },
+    "enabled=false,facing=west,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_off",
+      "y": 90
+    },
+    "enabled=true,facing=east,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 270
+    },
+    "enabled=true,facing=east,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 270
+    },
+    "enabled=true,facing=east,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 270
+    },
+    "enabled=true,facing=north,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 180
+    },
+    "enabled=true,facing=north,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 180
+    },
+    "enabled=true,facing=north,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 180
+    },
+    "enabled=true,facing=south,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on"
+    },
+    "enabled=true,facing=south,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_on"
+    },
+    "enabled=true,facing=south,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on"
+    },
+    "enabled=true,facing=west,output_mode=left_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 90
+    },
+    "enabled=true,facing=west,output_mode=normal": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 90
+    },
+    "enabled=true,facing=west,output_mode=right_front": {
+      "model": "robot_arm:block/filter_conveyor_luv_on",
+      "y": 90
+    }
+  }
+}

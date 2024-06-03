@@ -7,7 +7,7 @@ import net.minecraft.world.phys.HitResult;
 import screret.robotarm.data.machine.RobotArmMachines;
 
 public class RobotArmBehavior implements IInteractionItem {
-    private int tier;
+    private final int tier;
 
     public RobotArmBehavior(int tier) {
         this.tier = tier;
@@ -23,7 +23,7 @@ public class RobotArmBehavior implements IInteractionItem {
             var pos = blockPos.relative(direction);
             if (world.getBlockState(pos).isAir()) {
                 if (!world.isClientSide()) {
-                    world.setBlockAndUpdate(pos, RobotArmMachines.ROBOT_ARM.defaultBlockState());
+                    world.setBlockAndUpdate(pos, RobotArmMachines.ROBOT_ARM[tier].defaultBlockState());
                 }
                 context.getItemInHand().shrink(1);
                 return InteractionResult.SUCCESS;

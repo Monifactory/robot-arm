@@ -1,5 +1,9 @@
 package screret.robotarm.blockentity;
 
+import com.gregtechceu.gtceu.api.cover.filter.ItemFilter;
+import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,42 +15,27 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import screret.robotarm.block.ConveyorBeltBlock;
+import screret.robotarm.block.FilterConveyorBeltBlock;
+import screret.robotarm.block.properties.ConveyorOutputMode;
 import screret.robotarm.block.properties.ConveyorSlope;
 
 public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
 
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(FilterConveyorBeltBlockEntity.class,
+            ConveyorBeltBlockEntity.MANAGED_FIELD_HOLDER);
+
     public int lastRoundRobinOutDir = 0;
 
-    public int outputMode = 0;
-    public static int OUTPUT_MODE_NORMAL = 0;
-    public static int OUTPUT_MODE_LEFT_FRONT = 1;
-    public static int OUTPUT_MODE_RIGHT_FRONT = 2;
+    //@Persisted @DescSynced
+    public ConveyorOutputMode outputMode = ConveyorOutputMode.NORMAL;
 
     public FilterConveyorBeltBlockEntity(BlockEntityType<? extends FilterConveyorBeltBlockEntity> blockEntityType, BlockPos pos, BlockState state, int tier) {
         super(blockEntityType, pos, state, tier);
-        transferCooldownCounter = new int[4];
-        transferSidewaysOffset = new int[4];
     }
 
     @Override
     public int getSize() {
         return 6 * tier + 1;
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-
-        tag.putInt("LastRoundRobinOutDir", lastRoundRobinOutDir);
-        tag.putInt("OutputMode", outputMode);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-
-        lastRoundRobinOutDir = tag.getInt("LastRoundRobinOutDir");
-        outputMode = tag.getInt("OutputMode");
     }
 
     public static int CONTAINER_DATA_COUNT = 1;
@@ -55,7 +44,7 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
         @Override
         public int get(int index) {
             if (index == 0) {
-                return outputMode;
+                return outputMode.ordinal();
             }
             return 0;
         }
@@ -64,8 +53,8 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
         public void set(int index, int value) {
             if (index == 0) {
                 if (level != null) {
-                    outputMode = value;
-                    level.setBlock(getPos(), getBlockState().setValue(ConveyorBeltBlock.OUTPUT_MODE, outputMode), 3);
+                    outputMode = ConveyorOutputMode.VALUES[value];
+                    level.setBlock(getPos(), getBlockState().setValue(FilterConveyorBeltBlock.OUTPUT_MODE, outputMode), 3);
                 }
             }
         }
@@ -81,23 +70,13 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
         return false;
     }
 
-    public static void clientTick(Level world, BlockPos pos, BlockState state, ConveyorBeltBlockEntity blockEntity) {
-        if (!state.getValue(ConveyorBeltBlock.ENABLED)) {
-            return;
-        }
-
-        for (int i = 0; i < 4; i++) {
-            blockEntity.updateCooldowns(i);
-        }
-    }
-
     public static void serverTick(Level world, BlockPos pos, BlockState state, FilterConveyorBeltBlockEntity blockEntity) {
         if (!state.getValue(ConveyorBeltBlock.ENABLED)) {
             blockEntity.updateSlotActuallyEmptyHack();
             return;
         }
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < blockEntity.getSize(); i++) {
             if (blockEntity.items.getStackInSlot(i).isEmpty()) {
                 //if empty slot, reset cool-downs
                 blockEntity.resetCooldowns(i);
@@ -112,10 +91,10 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
 
                 if (i == 2 || i == 3) {//the last slots for left and right directions
                     Direction direction = state.getValue(ConveyorBeltBlock.FACING);
-                    if (i == 2 && blockEntity.outputMode != OUTPUT_MODE_LEFT_FRONT) {
+                    if (i == 2 && blockEntity.outputMode != ConveyorOutputMode.LEFT_FRONT) {
                         direction = direction.getCounterClockWise(Direction.Axis.Y);
                     }
-                    if (i == 3 && blockEntity.outputMode != OUTPUT_MODE_RIGHT_FRONT) {
+                    if (i == 3 && blockEntity.outputMode != ConveyorOutputMode.RIGHT_FRONT) {
                         direction = direction.getClockWise(Direction.Axis.Y);
                     }
 
@@ -157,7 +136,11 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
     }
 
     public boolean slotStacksMatch(int inputSlot, int filterSlot) {
-        return ItemStack.isSameItemSameTags(items.getStackInSlot(inputSlot), items.getStackInSlot(filterSlot));
+        ItemStack filterStack = items.getStackInSlot(filterSlot);
+        if (!ItemFilter.FILTERS.containsKey(filterStack.getItem())) {
+            return true;
+        }
+        return ItemFilter.loadFilter(filterStack).test(items.getStackInSlot(inputSlot));
     }
 
     public int getToSlotForFilter() {
@@ -205,5 +188,10 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
         }
 
         return -1;
+    }
+
+    @Override
+    public ManagedFieldHolder getFieldHolder() {
+        return MANAGED_FIELD_HOLDER;
     }
 }

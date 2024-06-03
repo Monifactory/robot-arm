@@ -28,7 +28,10 @@ import screret.robotarm.data.tag.TagHandler;
 public class RobotArm {
     public static final String MOD_ID = "robot_arm";
     public static final Logger LOGGER = LogManager.getLogger();
-    public static GTRegistrate REGISTRATE = GTRegistrate.create(RobotArm.MOD_ID);
+    public static final GTRegistrate REGISTRATE = GTRegistrate.create(RobotArm.MOD_ID);
+
+    public static final String MODID_ULVCOVM = "ulvcovm",
+                                MODID_FLYWHEEL = "flywheel";
 
     static {
         REGISTRATE.creativeModeTab(() -> RobotArmCreativeModeTabs.CREATIVE_TAB);
@@ -49,7 +52,7 @@ public class RobotArm {
         REGISTRATE.registerEventListeners(modEventBus);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            if (LDLib.isModLoaded("flywheel")) {
+            if (LDLib.isModLoaded(MODID_FLYWHEEL)) {
                 RobotArmPartialModels.init();
             }
         });

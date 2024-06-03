@@ -1,6 +1,8 @@
 package screret.robotarm.block;
 
-import com.gregtechceu.gtceu.common.data.GTBlockEntities;
+import com.gregtechceu.gtceu.api.capability.ICoverable;
+import com.gregtechceu.gtceu.api.cover.filter.ItemFilter;
+import com.gregtechceu.gtceu.data.recipe.CraftingComponent;
 import com.lowdragmc.lowdraglib.side.item.IItemTransfer;
 import com.lowdragmc.lowdraglib.side.item.ItemTransferHelper;
 import net.minecraft.ChatFormatting;
@@ -8,7 +10,6 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -29,20 +30,25 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import screret.robotarm.block.properties.ConveyorSlope;
 import screret.robotarm.blockentity.ConveyorBeltBlockEntity;
+import screret.robotarm.blockentity.FilterConveyorBeltBlockEntity;
+import screret.robotarm.data.block.RobotArmBlocks;
 import screret.robotarm.data.blockentity.RobotArmBlockEntities;
 import screret.robotarm.util.ConveyorBeltState;
 import screret.robotarm.util.RobotArmTags;
+import screret.robotarm.util.VoxelShapeUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -53,48 +59,81 @@ public class ConveyorBeltBlock extends BaseEntityBlock {
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<ConveyorSlope> SLOPE = EnumProperty.create("slope", ConveyorSlope.class);
-    public static final IntegerProperty OUTPUT_MODE = IntegerProperty.create("output_mode", 0, 2);
 
-    private final int tier;
+    public static final VoxelShape SHAPE_FLAT = Block.box(0, 0, 0, 16, 6, 16);
+    public static final VoxelShape SHAPE_SLOPE = Shapes.or(
+            Block.box(0, 2, 0, 16, 6, 4),
+            Block.box(0, 6, 4, 16, 10, 8),
+            Block.box(0, 10, 8, 16, 14, 12),
+            Block.box(0, 14, 12, 16, 18, 16)
+    );
+    public static final VoxelShape[] ROTATED_SHAPE_CACHE = new VoxelShape[4];
+    static {
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            ROTATED_SHAPE_CACHE[dir.get2DDataValue()] = VoxelShapeUtils.rotateShape(Direction.SOUTH, dir, SHAPE_SLOPE);
+        }
+    }
 
-    public ConveyorBeltBlock(BlockBehaviour.Properties properties, int tier) {
+    protected final int tier;
+
+    public ConveyorBeltBlock(Properties properties, int tier) {
         super(properties);
         this.tier = tier;
 
-        this.registerDefaultState(this.getStateDefinition().any()
-                .setValue(ENABLED, true)
-                .setValue(FACING, Direction.NORTH)
-                .setValue(SLOPE, ConveyorSlope.NONE)
-                .setValue(OUTPUT_MODE, 0)
-        );
+        if (this.getClass() == ConveyorBeltBlock.class) {
+            this.registerDefaultState(this.getStateDefinition().any()
+                    .setValue(ENABLED, true)
+                    .setValue(FACING, Direction.NORTH)
+                    .setValue(SLOPE, ConveyorSlope.NONE)
+            );
+        }
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ENABLED, FACING, SLOPE, OUTPUT_MODE);
+        super.createBlockStateDefinition(builder);
+        builder.add(ENABLED, FACING, SLOPE);
     }
 
     @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        return ((ItemStack) CraftingComponent.CONVEYOR.getIngredient(tier)).copy();
+    }
+
+    @NotNull
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction facing = context.getHorizontalDirection();
+        Direction clickedSide = ICoverable.determineGridSideHit(context.getHitResult());
+        Direction facing = clickedSide != null && clickedSide.getAxis() != Direction.Axis.Y ?
+                clickedSide : context.getHorizontalDirection();
+        ConveyorSlope slope = ConveyorSlope.NONE;
         Player player = context.getPlayer();
 
-        if (player == null) {
-            return this.defaultBlockState();
+        if (player != null && player.isShiftKeyDown()) {
+            facing = facing.getOpposite();
         }
 
-        if (player.isShiftKeyDown()) {
-            facing = facing.getOpposite();
+        if (clickedSide == facing.getOpposite()) {
+            slope = ConveyorSlope.DOWN;
+            facing = clickedSide;
+        } else if (clickedSide == facing) {
+            slope = ConveyorSlope.UP;
         }
 
         return this.defaultBlockState()
                 .setValue(ENABLED, !context.getLevel().hasNeighborSignal(context.getClickedPos()))
-                .setValue(FACING, facing);
+                .setValue(FACING, facing)
+                .setValue(SLOPE, slope);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Block.box(0, 0, 0, 16, 6, 16);
+        if (state.getValue(SLOPE) == ConveyorSlope.UP) {
+            return ROTATED_SHAPE_CACHE[state.getValue(FACING).get2DDataValue()];
+        } else if (state.getValue(SLOPE) == ConveyorSlope.DOWN) {
+            return ROTATED_SHAPE_CACHE[state.getValue(FACING).getOpposite().get2DDataValue()];
+        }
+        return SHAPE_FLAT;
     }
 
     @Override
@@ -147,15 +186,28 @@ public class ConveyorBeltBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.getItemInHand(hand).is(RobotArmTags.CONVEYORS)) {
-            //Holding a belt
-            player.displayClientMessage(Component.translatable("text.robot_arm.belt_place_on_belt.message")
-                    .withStyle(ChatFormatting.GRAY), true);
-
-            return InteractionResult.PASS;//Allow placing of belt on this without shifting
+        ItemStack stack = player.getItemInHand(hand);
+        if (ItemFilter.FILTERS.containsKey(stack.getItem())) {
+            BlockState newState = RobotArmBlocks.FILTER_CONVEYOR_BELTS[this.tier].getDefaultState()
+                    .setValue(FACING, state.getValue(FACING))
+                    .setValue(ENABLED, state.getValue(ENABLED));
+            level.setBlock(pos, newState, Block.UPDATE_ALL_IMMEDIATE);
+            if (level.getBlockEntity(pos) instanceof FilterConveyorBeltBlockEntity filterConveyor) {
+                filterConveyor.items.setStackInSlot(4, stack);
+            }
+            return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public boolean triggerEvent(BlockState pState, Level pLevel, BlockPos pPos, int pId, int pParam) {
+        BlockEntity tile = pLevel.getBlockEntity(pPos);
+        if (tile != null) {
+            return tile.triggerEvent(pId, pParam);
+        }
+        return false;
     }
 
     @Nullable
@@ -211,7 +263,8 @@ public class ConveyorBeltBlock extends BaseEntityBlock {
             if (!living.isShiftKeyDown()) {
                 Direction direction = state.getValue(ConveyorBeltBlock.FACING);
                 Vec3i vectorI = direction.getNormal();
-                Vec3 vector = new Vec3(vectorI.getX() * 0.1 * tier, vectorI.getY() * 0.1 * tier, vectorI.getZ() * 0.1 * tier);
+                double speedMultiplier = 1.0 / 4 / (60.0 / (tier + 1));
+                Vec3 vector = new Vec3(vectorI.getX() * speedMultiplier, vectorI.getY() * speedMultiplier, vectorI.getZ() * speedMultiplier);
                 moveEntityOn(vector, living);
             }
         } else if (entity instanceof ItemEntity item && !level.isClientSide) {
@@ -235,10 +288,5 @@ public class ConveyorBeltBlock extends BaseEntityBlock {
     public void moveEntityOn(Vec3 vector, LivingEntity livingEntity) {
         vector = vector.multiply(1.5f, 1.5f, 1.5f);
         livingEntity.addDeltaMovement(vector);
-    }
-
-    @Nullable
-    public ResourceLocation getNextCycleBeltType() {
-        return null;
     }
 }

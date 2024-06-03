@@ -1,5 +1,6 @@
 package screret.robotarm.client.renderer;
 
+import com.lowdragmc.lowdraglib.side.item.IItemTransfer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.joml.Vector3d;
 import screret.robotarm.block.ConveyorBeltBlock;
+import screret.robotarm.block.properties.ConveyorOutputMode;
 import screret.robotarm.block.properties.ConveyorSlope;
 import screret.robotarm.blockentity.ConveyorBeltBlockEntity;
 import screret.robotarm.blockentity.FilterConveyorBeltBlockEntity;
@@ -32,21 +34,12 @@ public class ConveyorBeltBlockEntityRenderer<T extends ConveyorBeltBlockEntity> 
 
     @Override
     public void render(ConveyorBeltBlockEntity blockEntity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
-        if (blockEntity instanceof ConveyorBeltBlockEntity && blockEntity.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.UP) {
-            return;
-        }
-
-        IItemHandlerModifiable beltInv = blockEntity.items;
+        IItemTransfer beltInv = blockEntity.items;
 
         matrices.pushPose();
 
-        int forwardSlots = 3;
+        int forwardSlots = blockEntity.getSize();
         int forwardSlotsSize = 3;
-
-        if (blockEntity instanceof FilterConveyorBeltBlockEntity) {
-            forwardSlots = 4;
-            forwardSlotsSize = 3;
-        }
 
         for (int i = 0; i < forwardSlots; i++) {
             if (!beltInv.getStackInSlot(i).isEmpty()) {
@@ -56,11 +49,11 @@ public class ConveyorBeltBlockEntityRenderer<T extends ConveyorBeltBlockEntity> 
                 float sidewaysOffset = (float) blockEntity.transferSidewaysOffset[i] / 100f;
 
                 if (blockEntity instanceof FilterConveyorBeltBlockEntity filterConveyorBeltBlockEntity) {
-                    if (i == 2 && filterConveyorBeltBlockEntity.outputMode != FilterConveyorBeltBlockEntity.OUTPUT_MODE_LEFT_FRONT) {
+                    if (i == 2 && filterConveyorBeltBlockEntity.outputMode != ConveyorOutputMode.LEFT_FRONT) {
                         renderBeltItem(blockEntity, matrices, vertexConsumers, light, overlay, beltInv.getStackInSlot(2), 0.5f, -getTransferCooldownOffset(blockEntity, 2) / 2);
                         continue;
                     }
-                    if (i == 3 && filterConveyorBeltBlockEntity.outputMode != FilterConveyorBeltBlockEntity.OUTPUT_MODE_RIGHT_FRONT) {
+                    if (i == 3 && filterConveyorBeltBlockEntity.outputMode != ConveyorOutputMode.RIGHT_FRONT) {
                         renderBeltItem(blockEntity, matrices, vertexConsumers, light, overlay, beltInv.getStackInSlot(3), 0.5f, getTransferCooldownOffset(blockEntity, 3) / 2);
                         continue;
                     }
@@ -81,6 +74,7 @@ public class ConveyorBeltBlockEntityRenderer<T extends ConveyorBeltBlockEntity> 
 
     public void renderBeltItem(ConveyorBeltBlockEntity blockEntity, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay, ItemStack itemStack, float offset, float sidewaysOffset) {
         Direction facing = blockEntity.getBlockState().getValue(ConveyorBeltBlock.FACING);
+        ConveyorSlope slope = blockEntity.getBlockState().getValue(ConveyorBeltBlock.SLOPE);
 
         // Move the item
         Vector3d translated = new Vector3d(0, 0, 0);
@@ -92,11 +86,11 @@ public class ConveyorBeltBlockEntityRenderer<T extends ConveyorBeltBlockEntity> 
 
         Direction slopeDir = null;
 
-        if (blockEntity.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.DOWN) {
+        if (slope == ConveyorSlope.DOWN) {
             height += 1f - offset;
 
             slopeDir = facing;
-        } else if (blockEntity.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.UP) {
+        } else if (slope == ConveyorSlope.UP) {
             height += offset;
 
             slopeDir = facing.getOpposite();

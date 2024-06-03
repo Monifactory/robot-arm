@@ -1,6 +1,5 @@
 package screret.robotarm.client.renderer;
 
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.jozufozu.flywheel.backend.Backend;
 import com.lowdragmc.lowdraglib.LDLib;
@@ -87,7 +86,7 @@ public class RobotArmRenderer extends IModelRenderer {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void render(BlockEntity blockEntity, float partialTicks, PoseStack stack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        var useInstance = LDLib.isModLoaded("flywheel") && Backend.canUseInstancing(blockEntity.getLevel());
+        var useInstance = LDLib.isModLoaded(RobotArm.MODID_FLYWHEEL) && Backend.canUseInstancing(blockEntity.getLevel());
         if (blockEntity instanceof IMachineBlockEntity machineBlockEntity && machineBlockEntity.getMetaMachine() instanceof RobotArmMachine robotArm) {
             var rotation = robotArm.getArmRotation(partialTicks);
             renderRobotArm(useInstance, stack, bufferSource, combinedLight, combinedOverlay, rotation.x(), rotation.y(), rotation.z(), rotation.w(), robotArm.getClampRotation(partialTicks), robotArm.getTransferredItems());

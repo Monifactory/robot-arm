@@ -1,14 +1,26 @@
 package screret.robotarm.blockentity;
 
+import com.lowdragmc.lowdraglib.misc.ItemStackTransfer;
+import com.lowdragmc.lowdraglib.side.item.IItemTransfer;
+import com.lowdragmc.lowdraglib.side.item.forge.ItemTransferHelperImpl;
+import com.lowdragmc.lowdraglib.syncdata.IEnhancedManaged;
+import com.lowdragmc.lowdraglib.syncdata.IManagedStorage;
+import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.lowdragmc.lowdraglib.syncdata.annotation.RequireRerender;
+import com.lowdragmc.lowdraglib.syncdata.blockentity.IAsyncAutoSyncBlockEntity;
+import com.lowdragmc.lowdraglib.syncdata.blockentity.IAutoPersistBlockEntity;
+import com.lowdragmc.lowdraglib.syncdata.field.FieldManagedStorage;
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+import lombok.Getter;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,8 +30,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import screret.robotarm.block.ConveyorBeltBlock;
@@ -31,32 +41,39 @@ import java.util.Objects;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ConveyorBeltBlockEntity extends BlockEntity {
+public class ConveyorBeltBlockEntity extends BlockEntity implements IEnhancedManaged, IAutoPersistBlockEntity, IAsyncAutoSyncBlockEntity {
 
-    public Boolean copiedItemsFromBelowIfTop = false;
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(ConveyorBeltBlockEntity.class);
 
-    public final ItemStackHandler items;
+    @Getter
+    public final FieldManagedStorage syncStorage = new FieldManagedStorage(this);
+
+    @Persisted @DescSynced @RequireRerender
+    public final ItemStackTransfer items;
     public final int tier;
 
-    public int transferCooldown = 30;
-    public int moveToCenterSpeed = 2;
+    public final int transferCooldown;
+    public final int moveToCenterSpeed = 2;
+    @Persisted @DescSynced
     public int[] transferCooldownCounter;
+    @Persisted @DescSynced
     public int[] transferCooldownCounterLastTick = new int[10];
+    @Persisted @DescSynced
     public int[] transferSidewaysOffset;
+    @Persisted @DescSynced
     public int[] slotActuallyHasItem;
 
+    @Persisted @DescSynced
     public int[] sideTransferAttempts = new int[2];
+    @Persisted @DescSynced
     public long[] sideTransferLatestAttempt = new long[3];
 
     public ConveyorBeltBlockEntity(BlockEntityType<? extends ConveyorBeltBlockEntity> blockEntityType, BlockPos pos, BlockState state, int tier) {
         super(blockEntityType, pos, state);
         this.tier = tier;
-        this.items = new ItemStackHandler(getSize()) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                ConveyorBeltBlockEntity.this.setChanged();
-            }
-        };
+        this.items = new ItemStackTransfer(getSize());
+        this.items.setOnContentsChanged(this::onChanged);
+        transferCooldown = 60 / (tier + 1);
         transferCooldownCounter = new int[getSize()];
         transferSidewaysOffset = new int[getSize()];
         slotActuallyHasItem = new int[getSize()];
@@ -67,48 +84,15 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             Direction facing = getBlockState().getValue(ConveyorBeltBlock.FACING);
 
-            return LazyOptional.of(() -> new SidedItemHandler(this.items, facing, this::isValidInsertionSide)).cast();
+            return LazyOptional.of(() -> ItemTransferHelperImpl
+                    .toItemHandler(new SidedItemHandler(this.items, facing, this::isValidInsertionSide)))
+                    .cast();
         }
         return super.getCapability(cap, side);
     }
 
     public int getSize() {
         return 3 * tier + 1;
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-
-        tag.put("items", items.serializeNBT());
-
-        tag.putIntArray("TransferCooldownCounter", transferCooldownCounter);
-        tag.putIntArray("TransferSidewaysOffset", transferSidewaysOffset);
-        tag.putIntArray("SlotActuallyHasItem", slotActuallyHasItem);
-
-        tag.putIntArray("SideTransferAttempts", sideTransferAttempts);
-        tag.putLongArray("SideTransferLatestAttempt", sideTransferLatestAttempt);
-    }
-
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-
-        items.deserializeNBT(tag.getCompound("items"));
-
-        transferCooldownCounter = tag.getIntArray("TransferCooldownCounter");
-        transferSidewaysOffset = tag.getIntArray("TransferSidewaysOffset");
-        slotActuallyHasItem = tag.getIntArray("SlotActuallyHasItem");
-
-        sideTransferAttempts = tag.getIntArray("SideTransferAttempts");
-        sideTransferLatestAttempt = tag.getLongArray("SideTransferLatestAttempt");
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
-        return tag;
     }
 
     @Nullable
@@ -136,12 +120,12 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
         sideTransferLatestAttempt[sideIndex] = level.getGameTime();
 
         if (sideTransferLatestAttempt[1 - sideIndex] < (level.getGameTime() - 1)) {
-            //if last attempt on other side was more than a second ago, assume no longer trying
+            // if last attempt on other side was more than a second ago, assume no longer trying
             sideTransferAttempts[1 - sideIndex] = 0;
         }
 
         if (!(sideTransferLatestAttempt[2] < (level.getGameTime() - 1))) {
-            //hopper above trying to get in - takes priority
+            // hopper above trying to get in - takes priority
             return false;
         }
 
@@ -156,28 +140,17 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
 
     public boolean moveToNextBelt(Direction direction, int fromSlot, @Nullable ConveyorBeltBlockEntity conveyorBlockEntityInfront) {
         if (conveyorBlockEntityInfront == null) {
-            return false;
+            ItemStack stack = this.items.extractItem(fromSlot, this.items.getStackInSlot(fromSlot).getCount(), false);
+            Containers.dropItemStack(level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), stack);
+            return true;
         }
 
         if (!conveyorBlockEntityInfront.getBlockState().getValue(ConveyorBeltBlock.ENABLED)) {
             return false;
         }
 
-        if (!conveyorBlockEntityInfront.copiedItemsFromBelowIfTop && conveyorBlockEntityInfront.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.UP) {
-            return false;//Prevents any items going into the top inventory before it is overwritten by the bottom one
-        }
-
-        if (conveyorBlockEntityInfront.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.UP) {
-            return false;
-        }
-
         Direction directionOfBeltInFront = conveyorBlockEntityInfront.level
                 .getBlockState(conveyorBlockEntityInfront.worldPosition).getValue(ConveyorBeltBlock.FACING);
-
-        if (directionOfBeltInFront == direction &&
-                conveyorBlockEntityInfront.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.DOWN) {
-            return false;
-        }
 
         if (directionOfBeltInFront.getOpposite() == direction) {
             //belts are facing towards each-over, item can move
@@ -194,13 +167,13 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
         int sideIndex = -1;
         boolean canMove = true;
 
-        if (direction.getClockWise(Direction.Axis.Y) == directionOfBeltInFront) {
+        if (direction.getClockWise() == directionOfBeltInFront) {
             newOffset = 50;
             newSlot = 1;
             sideIndex = 0;
         }
 
-        if (direction.getCounterClockWise(Direction.Axis.Y) == directionOfBeltInFront) {
+        if (direction.getCounterClockWise() == directionOfBeltInFront) {
             newOffset = -50;
             newSlot = 1;
             sideIndex = 1;
@@ -245,6 +218,12 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
     public boolean moveToNextBelt(Direction direction, ConveyorSlope slope, int fromSlot) {
         BlockPos offset = slope.getOffsetPos(worldPosition.relative(direction));
         ConveyorBeltBlockEntity conveyorBlockEntityInfront = getConveyorBlockEntityAt(level, offset);
+        if (conveyorBlockEntityInfront == null) {
+            ConveyorBeltBlockEntity be = getConveyorBlockEntityAt(level, offset.below());
+            if (be != null && be.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.DOWN) {
+                conveyorBlockEntityInfront = be;
+            }
+        }
 
         return moveToNextBelt(direction, fromSlot, conveyorBlockEntityInfront);
     }
@@ -271,15 +250,11 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
     }
 
     public static void clientTick(Level world, BlockPos pos, BlockState state, ConveyorBeltBlockEntity blockEntity) {
-        if (Minecraft.getInstance().isSingleplayer()) {
-            return;
-        }
-
         if (!state.getValue(ConveyorBeltBlock.ENABLED)) {
             return;
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < blockEntity.getSize(); i++) {
             blockEntity.updateCooldowns(i);
         }
     }
@@ -290,7 +265,7 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
             return;
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < blockEntity.getSize(); i++) {
             if (blockEntity.items.getStackInSlot(i).isEmpty()) {
                 //if empty slot, reset cool-downs
                 blockEntity.resetCooldowns(i);
@@ -310,7 +285,7 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
                     blockEntity.moveToNextBelt(direction, slope, i);
                 } else {
                     //else, moving from one slot to another within this belt
-                    if (transferToEmpty(blockEntity.items, i, blockEntity.items, i + 1)) {
+                    if (transferToEmpty(blockEntity.items, i, blockEntity.items, Math.min(i + 1, blockEntity.getSize() - 1))) {
                         blockEntity.transferCooldownCounter[i + 1] = blockEntity.transferCooldown;
                         blockEntity.transferSidewaysOffset[i + 1] = blockEntity.transferSidewaysOffset[i];
                         blockEntity.setChanged();
@@ -322,7 +297,7 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
         blockEntity.updateSlotActuallyEmptyHack();
     }
 
-    public static boolean transferToEmpty(IItemHandler from, int fromSlot, IItemHandler to, int toSlot) {
+    public static boolean transferToEmpty(IItemTransfer from, int fromSlot, IItemTransfer to, int toSlot) {
         if (!from.getStackInSlot(fromSlot).isEmpty() && to.getStackInSlot(toSlot).isEmpty()) {
             ItemStack toMove = from.extractItem(fromSlot, from.getStackInSlot(fromSlot).getCount(), false);
             to.insertItem(toSlot, toMove, false);
@@ -371,7 +346,7 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
     public void setChanged() {
         super.setChanged();
 
-        if (this.hasLevel() && !this.getLevel().isClientSide) {
+        if (this.hasLevel() && !this.level.isClientSide) {
             ((ServerLevel) level).getChunkSource().blockChanged(getPos());
         }
     }
@@ -414,6 +389,45 @@ public class ConveyorBeltBlockEntity extends BlockEntity {
         }
 
         return false;
+    }
+
+    @Override
+    public void scheduleRenderUpdate() {
+        var pos = getPos();
+        if (level != null) {
+            var state = level.getBlockState(pos);
+            if (level.isClientSide) {
+                level.sendBlockUpdated(pos, state, state, 1 << 3);
+            } else {
+                level.blockEvent(pos, state.getBlock(), 1, 0);
+            }
+        }
+    }
+
+    @Override
+    public boolean triggerEvent(int id, int para) {
+        if (id == 1) { // chunk re render
+            if (level != null && level.isClientSide) {
+                scheduleRenderUpdate();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public ManagedFieldHolder getFieldHolder() {
+        return MANAGED_FIELD_HOLDER;
+    }
+
+    @Override
+    public IManagedStorage getRootStorage() {
+        return syncStorage;
+    }
+
+    @Override
+    public void onChanged() {
+        this.setChanged();
     }
 }
 

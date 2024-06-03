@@ -6,15 +6,15 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.HitResult;
 import screret.robotarm.block.ConveyorBeltBlock;
-import screret.robotarm.data.machine.RobotArmMachines;
+import screret.robotarm.data.block.RobotArmBlocks;
 
 import java.util.function.Supplier;
 
 public class ConveyorBeltBehavior implements IInteractionItem {
-    private Supplier<ConveyorBeltBlock> block;
+    private int tier;
 
-    public ConveyorBeltBehavior(Supplier<ConveyorBeltBlock> block) {
-        this.block = block;
+    public ConveyorBeltBehavior(int tier) {
+        this.tier = tier;
     }
 
     @Override
@@ -27,7 +27,8 @@ public class ConveyorBeltBehavior implements IInteractionItem {
             var pos = blockPos.relative(direction);
             if (world.getBlockState(pos).isAir()) {
                 if (!world.isClientSide()) {
-                    world.setBlockAndUpdate(pos, block.get().getStateForPlacement(new BlockPlaceContext(context)));
+                    world.setBlockAndUpdate(pos, RobotArmBlocks.CONVEYOR_BELTS[tier].get()
+                            .getStateForPlacement(new BlockPlaceContext(context)));
                 }
                 context.getItemInHand().shrink(1);
                 return InteractionResult.SUCCESS;

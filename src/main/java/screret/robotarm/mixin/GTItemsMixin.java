@@ -34,23 +34,20 @@ public class GTItemsMixin {
             GTRegistration.REGISTRATE.addRegisterCallback("opv_robot_arm", Registries.ITEM, GTItems.attach(new RobotArmBehavior(GTValues.OpV)));
         }
 
-
-        GTRegistration.REGISTRATE.addRegisterCallback("lv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.LV_CONVEYOR_BELT)));
-        /*
-        GTRegistration.REGISTRATE.addRegisterCallback("mv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.MV_CONVEYOR_BELT)));
-        GTRegistration.REGISTRATE.addRegisterCallback("hv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.HV_CONVEYOR_BELT)));
-        GTRegistration.REGISTRATE.addRegisterCallback("ev_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.EV_CONVEYOR_BELT)));
-        GTRegistration.REGISTRATE.addRegisterCallback("iv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.IV_CONVEYOR_BELT)));
-        GTRegistration.REGISTRATE.addRegisterCallback("luv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.LuV_CONVEYOR_BELT)));
-        GTRegistration.REGISTRATE.addRegisterCallback("zpm_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.ZPM_CONVEYOR_BELT)));
-        GTRegistration.REGISTRATE.addRegisterCallback("uv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.UV_CONVEYOR_BELT)));
+        GTRegistration.REGISTRATE.addRegisterCallback("lv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.LV)));
+        GTRegistration.REGISTRATE.addRegisterCallback("mv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.MV)));
+        GTRegistration.REGISTRATE.addRegisterCallback("hv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.HV)));
+        GTRegistration.REGISTRATE.addRegisterCallback("ev_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.EV)));
+        GTRegistration.REGISTRATE.addRegisterCallback("iv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.IV)));
+        GTRegistration.REGISTRATE.addRegisterCallback("luv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.LuV)));
+        GTRegistration.REGISTRATE.addRegisterCallback("zpm_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.ZPM)));
+        GTRegistration.REGISTRATE.addRegisterCallback("uv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.UV)));
         if (GTCEuAPI.isHighTier()) {
-            GTRegistration.REGISTRATE.addRegisterCallback("uhv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.UHV_CONVEYOR_BELT)));
-            GTRegistration.REGISTRATE.addRegisterCallback("uev_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.UEV_CONVEYOR_BELT)));
-            GTRegistration.REGISTRATE.addRegisterCallback("uiv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.UIV_CONVEYOR_BELT)));
-            GTRegistration.REGISTRATE.addRegisterCallback("uxv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.UIV_CONVEYOR_BELT)));
-            GTRegistration.REGISTRATE.addRegisterCallback("opv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(RobotArmBlocks.OpV_CONVEYOR_BELT)));
+            GTRegistration.REGISTRATE.addRegisterCallback("uhv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.UHV)));
+            GTRegistration.REGISTRATE.addRegisterCallback("uev_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.UEV)));
+            GTRegistration.REGISTRATE.addRegisterCallback("uiv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.UIV)));
+            GTRegistration.REGISTRATE.addRegisterCallback("uxv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.UXV)));
+            GTRegistration.REGISTRATE.addRegisterCallback("opv_conveyor_module", Registries.ITEM, GTItems.attach(new ConveyorBeltBehavior(GTValues.OpV)));
         }
-        */
     }
 }
