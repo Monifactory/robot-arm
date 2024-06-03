@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "enabled=true,facing=north,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt",
+      "y": 270
+    },
+    "enabled=true,facing=east,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt",
+      "y": 0
+    },
+    "enabled=true,facing=south,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt",
+      "y": 90
+    },
+    "enabled=true,facing=west,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt",
+      "y": 180
+    },
+    "enabled=false,facing=north,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt_off",
+      "y": 270
+    },
+    "enabled=false,facing=east,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt_off",
+      "y": 0
+    },
+    "enabled=false,facing=south,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt_off",
+      "y": 90
+    },
+    "enabled=false,facing=west,slope=none,output_mode=0": {
+      "model": "robot_arm:block/lv_conveyor_belt_off",
+      "y": 180
+    }
+  }
+}
