@@ -35,7 +35,7 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
 
     @Override
     public int getSize() {
-        return 6 * tier + 1;
+        return 5;
     }
 
     public static int CONTAINER_DATA_COUNT = 1;
@@ -76,7 +76,7 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
             return;
         }
 
-        for (int i = 0; i < blockEntity.getSize(); i++) {
+        for (int i = 0; i < 4; i++) {
             if (blockEntity.items.getStackInSlot(i).isEmpty()) {
                 //if empty slot, reset cool-downs
                 blockEntity.resetCooldowns(i);
@@ -87,19 +87,17 @@ public class FilterConveyorBeltBlockEntity extends ConveyorBeltBlockEntity {
 
             if (blockEntity.transferCooldownCounter[i] <= 0) {
                 blockEntity.transferCooldownCounter[i] = 0;
-                boolean moved = false;
 
                 if (i == 2 || i == 3) {//the last slots for left and right directions
                     Direction direction = state.getValue(ConveyorBeltBlock.FACING);
                     if (i == 2 && blockEntity.outputMode != ConveyorOutputMode.LEFT_FRONT) {
-                        direction = direction.getCounterClockWise(Direction.Axis.Y);
+                        direction = direction.getCounterClockWise();
                     }
                     if (i == 3 && blockEntity.outputMode != ConveyorOutputMode.RIGHT_FRONT) {
-                        direction = direction.getClockWise(Direction.Axis.Y);
+                        direction = direction.getClockWise();
                     }
 
-                    ConveyorSlope slope = state.getValue(ConveyorBeltBlock.SLOPE);
-                    blockEntity.moveToNextBelt(direction, slope, i);
+                    blockEntity.moveToNextBelt(direction, ConveyorSlope.NONE, i);
                 } else {
                     int toSlot;
 

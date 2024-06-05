@@ -1,5 +1,6 @@
 package screret.robotarm.blockentity;
 
+import com.gregtechceu.gtceu.utils.GTTransferUtils;
 import com.lowdragmc.lowdraglib.misc.ItemStackTransfer;
 import com.lowdragmc.lowdraglib.side.item.IItemTransfer;
 import com.lowdragmc.lowdraglib.side.item.forge.ItemTransferHelperImpl;
@@ -219,6 +220,13 @@ public class ConveyorBeltBlockEntity extends BlockEntity implements IEnhancedMan
         BlockPos offset = slope.getOffsetPos(worldPosition.relative(direction));
         ConveyorBeltBlockEntity conveyorBlockEntityInfront = getConveyorBlockEntityAt(level, offset);
         if (conveyorBlockEntityInfront == null) {
+            IItemTransfer transfer = ItemTransferHelperImpl.getItemTransfer(this.level, offset, direction.getOpposite());
+            if (transfer != null) {
+                ItemStack currentStack = this.items.getStackInSlot(fromSlot);
+                GTTransferUtils.insertItem(transfer, this.items.extractItem(fromSlot, currentStack.getCount(), false), false);
+                return true;
+            }
+
             ConveyorBeltBlockEntity be = getConveyorBlockEntityAt(level, offset.below());
             if (be != null && be.getBlockState().getValue(ConveyorBeltBlock.SLOPE) == ConveyorSlope.DOWN) {
                 conveyorBlockEntityInfront = be;
@@ -362,7 +370,7 @@ public class ConveyorBeltBlockEntity extends BlockEntity implements IEnhancedMan
             return false;
         }
 
-        if (facing.getOpposite() == side) {
+        if (facing == side) {
             return slot == 0 && canMoveToSlot(0);
         }
 

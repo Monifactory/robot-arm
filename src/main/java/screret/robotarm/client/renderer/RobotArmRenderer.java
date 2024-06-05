@@ -173,7 +173,7 @@ public class RobotArmRenderer extends IModelRenderer {
         int i = 1;
         if (stack.getCount() > 32) {
             i = 3;
-        } else if (stack.getCount() > 1) {
+        } else if (stack.getCount() > 16) {
             i = 2;
         }
         return i;
