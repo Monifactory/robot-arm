@@ -1,8 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "robot_arm:block/robot_arm",
-		"particle": "robot_arm:block/robot_arm"
+		"0": "robot_arm:block/robot_arm"
 	},
 	"elements": [
 		{

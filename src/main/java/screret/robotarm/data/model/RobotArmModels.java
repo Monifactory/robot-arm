@@ -1,9 +1,11 @@
 package screret.robotarm.data.model;
 
+import com.gregtechceu.gtceu.api.GTValues;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -12,6 +14,10 @@ import screret.robotarm.RobotArm;
 import screret.robotarm.block.ConveyorBeltBlock;
 import screret.robotarm.block.FilterConveyorBeltBlock;
 import screret.robotarm.block.properties.ConveyorSlope;
+import screret.robotarm.client.renderer.RobotArmRenderer;
+import screret.robotarm.data.block.RobotArmBlocks;
+
+import java.util.Locale;
 
 public class RobotArmModels {
 
@@ -97,5 +103,30 @@ public class RobotArmModels {
                                 .build();
                     });
         };
+    }
+
+    public static void extraModels(RegistrateBlockstateProvider provider) {
+        ModelFile axisParent = new ModelFile.ExistingModelFile(RobotArmRenderer.AXIS_Y, provider.models().existingFileHelper);
+        ModelFile arm1Parent = new ModelFile.ExistingModelFile(RobotArmRenderer.ARM_1, provider.models().existingFileHelper);
+        ModelFile arm2Parent = new ModelFile.ExistingModelFile(RobotArmRenderer.ARM_2, provider.models().existingFileHelper);
+        ModelFile arm3Parent = new ModelFile.ExistingModelFile(RobotArmRenderer.ARM_3, provider.models().existingFileHelper);
+
+        for (int tier : RobotArmBlocks.ALL_TIERS) {
+            String tierName = GTValues.VN[tier].toLowerCase(Locale.ROOT);
+            ResourceLocation texture = RobotArm.id("block/robot_arm/" + tierName);
+
+            provider.models().getBuilder("block/machine/robot_arm/" + tierName + "/axis_y")
+                    .texture("0", texture)
+                    .parent(axisParent);
+            provider.models().getBuilder("block/machine/robot_arm/" + tierName + "/arm_1")
+                    .texture("0", texture)
+                    .parent(arm1Parent);
+            provider.models().getBuilder("block/machine/robot_arm/" + tierName + "/arm_2")
+                    .texture("0", texture)
+                    .parent(arm2Parent);
+            provider.models().getBuilder("block/machine/robot_arm/" + tierName + "/arm_3")
+                    .texture("0", texture)
+                    .parent(arm3Parent);
+        }
     }
 }

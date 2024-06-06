@@ -21,6 +21,7 @@ import screret.robotarm.data.entity.RobotArmEntities;
 import screret.robotarm.data.item.RobotArmItems;
 import screret.robotarm.data.lang.LangHandler;
 import screret.robotarm.data.machine.RobotArmMachines;
+import screret.robotarm.data.model.RobotArmModels;
 import screret.robotarm.data.model.RobotArmPartialModels;
 import screret.robotarm.data.tag.TagHandler;
 
@@ -49,6 +50,7 @@ public class RobotArm {
         RobotArmItems.init();
         REGISTRATE.addDataGenerator(ProviderType.LANG, LangHandler::init);
         REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, TagHandler::itemTags);
+        REGISTRATE.addDataGenerator(ProviderType.BLOCKSTATE, RobotArmModels::extraModels);
         REGISTRATE.registerEventListeners(modEventBus);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {

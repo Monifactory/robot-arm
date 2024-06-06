@@ -37,8 +37,10 @@ public class RobotArmMachines {
             (tier, builder) -> builder
                     .blockProp(p -> p.noOcclusion())
                     .rotationState(RotationState.NONE)
-                    .renderer(() -> new RobotArmRenderer())
-                    .onBlockEntityRegister(attachInstance(() -> RobotArmInstance::new, false))
+                    .renderer(() -> new RobotArmRenderer(tier))
+                    .onBlockEntityRegister(attachInstance(() -> (materialManager, blockEntity) ->
+                                    new RobotArmInstance(materialManager, blockEntity, tier),
+                            false))
                     .hasTESR(true)
                     .shape(Shapes.box(0.2, 0, 0.2, 0.8, 1, 0.8))
                     .register(),

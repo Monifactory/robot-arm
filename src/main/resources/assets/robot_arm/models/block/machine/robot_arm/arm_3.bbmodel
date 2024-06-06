@@ -1,6 +1,6 @@
 {
 	"meta": {
-		"format_version": "4.9",
+		"format_version": "4.10",
 		"model_format": "java_block",
 		"box_uv": false
 	},
@@ -269,14 +269,15 @@
 		{
 			"path": "C:\\Users\\OMISTAJA\\Downloads\\robot_arm\\robot_arm.png",
 			"name": "robot_arm",
-			"folder": "blocks",
-			"namespace": "gtceu",
+			"folder": "block",
+			"namespace": "robot_arm",
 			"id": "0",
 			"width": 64,
 			"height": 64,
 			"uv_width": 32,
 			"uv_height": 32,
 			"particle": true,
+			"use_as_default": false,
 			"layers_enabled": false,
 			"sync_to_project": "",
 			"render_mode": "default",
@@ -289,8 +290,8 @@
 			"internal": true,
 			"saved": true,
 			"uuid": "1ac61ef4-5e66-1bc7-0345-02a4731291cc",
-			"relative_path": "../robot_arm.png",
-			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA65JREFUeF7tmktoE0EYx2elWktbfNZE22gfiIqCB0V7EcRUqSJeVBR6EC96E7RCoXgQkapUAx68eFA8BCzqRQpWMRI81UMP0nqQ0qY1Ko0VKdZifUa+TSbMTmY3M9uNmdnOXsJuvnn95v89dhJjduRcGmWvxU0RA+5/96xEVZ2dBn7+rasrZ4OfxQ+1od2Po/jW/Dwx/MVy73Rzb/1yyxjcDT02NBdcXrsB/fjwFjkBqGxYmxt6JvEOYQD4OTzTACgFTF1ZbUKLBdtzaiJVRarM443l7q6oCvAVABop7B7EBicXiF74y9wJcDVoq4wCDp88nxcEYWUQyMiLFQNoG7xoaQHgiE/ujh0AeofbLi/I23HfA4AMAhdkETsApJtIqQCyDhBVgPIAeofGLf59cMu6vJQFgMITNyx2Zz8fQS0VNxEJAIIb7QN0ESVD4CPnaIgAaA6sMtv2pz4hDIDsjAWAOyGXyHBOAOzUUqK1uBpWCAA5AihgXgFwhVeBRgYd3NzMGdTgdMmsFBMADm5uFo8D4rwG8DzYbq7fQMhIH8uUzUbPdUtKtHvuBrqXbTxxAaUBsE57RAmf3nEGRVuqzB1XTgHkK63owsEeToI0ANUV4GbnyTZKK8CLOoB15kdDlTYL2B12sFTBcwDy6K41/eF+fAOg0Pt/dPtDpkeVv8xUi09PHXD0uNbwHubr+Fzd1K69IaoAEgDulDwJAgAL19Rbxvv1cQyRABobGpjzGU0kkPQAWDNXGoCItHhOh8uW3FZLAV4BgINPKIrsAMQ33skNJZULiACwsyXLaeUABC4NM3/0cAtmfMVepgtIqwAAUBdkR2VRCO8nEkgD0ArQLqBjAKsS1EHQZR0w2FvraZaiA7shexYAANU1xWEwPWkgDUAFBYjWIyL20isg1DFUHP1nKSkBILlts8imctuGBt7IHwNAAcoBYG0BWQc4bRF9IqQcgK+DA+b6vj84bjnb64u9MH050t3tKNFnfU8s7XwJIBAIMCGkUimkAWgF+NQFsOb3te5PS+cC3ImTw9AuCEoLYPZWvaeV1rL4VWYW0ACyBMAFnIT037NA3atdQgpIRnaa8/9zMfMbYNmmMUverjh63+yPrgM4vIdpUvQ6AABUh5ZyzW86OYU0AK0A7QL+iwFcASBr5LsY0DwaE8oChWC97pg0TbZeqylkavm+vzHM/GdI0bMAAGiq/Ck0WTvjkZlFiATA2y+00wC0ArQLlC4GeBIAsp0UIwh6OT+6r3+8DWSpbux/UQAAAABJRU5ErkJggg=="
+			"relative_path": "../../../../../../../../../../../../Downloads/robot_arm/robot_arm.png",
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA6tJREFUeF7tmk1oE0EUx2elWktb/KyJttF+ICoKHhTtRRBTpYp4UVHoQbzoTdAKheJBRKpSDXjw4kHxELCoFylYxUjwVA89SOtBSpvWqDRWpFiL9TPyJtkwM5nd7Gw3ZmY7e9vtm9mZ3/u/j53UmB05l0bE9btnJb6r6uw0zMffurooG3geP9SGdj+OkkPRieEv1L3dzb31y6l3OB7osaEBAMprN6AfH97iqa0AVDaszb16JvEuB8B8Ds80AEYBU1dWY2ixYHtOTaSqSJV57FjH0xVVAb4CwCIF70FusAuB6IW/XE8sborgscoo4PDJ83lJEHYGiYy8eDmAtTE3LSUA0zNsFbACwHq47fKCPI/7HgBUELigilgBIMNESgWYbnOjAOUB9A6NU/F9cMu6vJIFgMITNyi7s5+PoJaKm4gEAADZGGCbKBkSH7lGQwRAc2AVHtuf+oRMAORkPACOC3KJDOcEwEotJdqLq9cKASDfAAqYVwBc4VVgkMEmNzdrBjXYXTIrBQMwk5ubzZsJcV4DeB5sx/s3EDLSxzJts9FznSqJVs/dQPdyjCchoDQA3mmPKOHTO86gaEsV9rhyCiA/aUU3DvZwEqQBqK4AN54nxyitAC/6AN6ZHwtV2ipgddjBU4WTA5BHd+nyZ87jGwCFvv+j2x9yI6r8ZaZbfHrqgG3EtYb3cD/H5xqmVuMNUQWQAMxJyZMgALBwTT31vl8fxxAJoLGhgbue0UQCSQ+At3KlAYhIy8npcNmS22opwCsAcPAJTZEVgPjGO7lXSRUCIgCsbMl2WjkAgUvD3B893IIZX7GXGwLSKgAA1AX5WVkUwvuJBNIAtAJ0COgcwOsEdRJ02QcM9tZ6WqXYxG7IXgUAQHVNcRhMTxpIA1BBAaL9iIi99AoIdQwVR/9ZSkoASG7bLOJUx7ahgTfy5wBQgHIAeC4g+wA7F7EnQsoB+Do4gPf3/cFx6myvL/YCx3Kku9tWos/6nlDjfAkgEAhwIaRSKaQBaAX4NARMze9r3Z+WLgQcF04HhlZJUFoAs7fqPe20lsWvcquABpAlACFgJ6T/XgXqXu0SUkAyshOv/8/FzG+AZZvGqLpdcfQ+no/tAxxED9ek6H0AAKgOLXW0vunkFNIAtAJ0CPgvBzhKAFkj3+WA5tGYUBUoBOt1xyQ22XqtppAp9ff+xjD3P0OKXgUAQFPlT6HFWhmPzCxCJACn88I4DUArQIdA6XKAJwkgO0kxkqCX62Pn+gd1PUypHPmEMgAAAABJRU5ErkJggg=="
 		}
 	],
 	"display": {
