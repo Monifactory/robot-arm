@@ -56,13 +56,13 @@ public class ConveyorBeltBlockEntity extends BlockEntity implements IEnhancedMan
     public final int transferCooldown;
     public final int moveToCenterSpeed = 2;
     @Persisted @DescSynced
-    public int[] transferCooldownCounter;
+    public final int[] transferCooldownCounter;
     @Persisted @DescSynced
-    public int[] transferCooldownCounterLastTick = new int[10];
+    public int[] transferCooldownCounterLastTick;
     @Persisted @DescSynced
-    public int[] transferSidewaysOffset;
+    public final int[] transferSidewaysOffset;
     @Persisted @DescSynced
-    public int[] slotActuallyHasItem;
+    public final int[] slotActuallyHasItem;
 
     @Persisted @DescSynced
     public int[] sideTransferAttempts = new int[2];
@@ -76,6 +76,7 @@ public class ConveyorBeltBlockEntity extends BlockEntity implements IEnhancedMan
         this.items.setOnContentsChanged(this::onChanged);
         transferCooldown = 60 / (tier + 1);
         transferCooldownCounter = new int[getSize()];
+        transferCooldownCounterLastTick = new int[getSize()];
         transferSidewaysOffset = new int[getSize()];
         slotActuallyHasItem = new int[getSize()];
     }
