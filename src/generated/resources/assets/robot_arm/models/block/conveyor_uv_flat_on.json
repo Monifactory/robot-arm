@@ -1,0 +1,8 @@
+{
+  "parent": "robot_arm:block/conveyor_belt_flat_on",
+  "textures": {
+    "particle": "robot_arm:block/conveyor_belt/top_off",
+    "side": "robot_arm:block/conveyor_belt/uv/side",
+    "top": "robot_arm:block/conveyor_belt/top"
+  }
+}

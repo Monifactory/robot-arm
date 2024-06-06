@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import screret.robotarm.item.behavior.ConveyorBeltBehavior;
 import screret.robotarm.item.behavior.RobotArmBehavior;
 
 @Mixin(value = CoverItems.class, remap = false)
@@ -16,6 +17,8 @@ public class UCMCoverItemsMixin {
     @Inject(method = "init", at = @At("RETURN"))
     private static void robotArm$addBehaviors(CallbackInfo ci) {
         UCMRegistries.REGISTRATE.addRegisterCallback("ulv_robot_arm", Registries.ITEM, CoverItems.attach(new RobotArmBehavior(GTValues.ULV)));
+
+        UCMRegistries.REGISTRATE.addRegisterCallback("ulv_conveyor_module", Registries.ITEM, CoverItems.attach(new ConveyorBeltBehavior(GTValues.ULV)));
     }
 
 }

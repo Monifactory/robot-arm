@@ -1,5 +1,6 @@
 package screret.robotarm.client.instance;
 
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.api.instance.DynamicInstance;
@@ -10,10 +11,11 @@ import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.AnimationTickHolder;
 import com.mojang.math.Axis;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import screret.robotarm.RobotArm;
+import screret.robotarm.data.model.RobotArmPartialModels;
 import screret.robotarm.machine.RobotArmMachine;
 
-import static screret.robotarm.data.model.RobotArmPartialModels.*;
-
+import java.util.Locale;
 
 public class RobotArmInstance extends BlockEntityInstance<BlockEntity> implements DynamicInstance {
 
@@ -22,12 +24,14 @@ public class RobotArmInstance extends BlockEntityInstance<BlockEntity> implement
     private final ModelData arm2;
     private final ModelData arm3;
 
-    public RobotArmInstance(MaterialManager materialManager, BlockEntity blockEntity) {
+    public RobotArmInstance(MaterialManager materialManager, BlockEntity blockEntity, int tier) {
         super(materialManager, blockEntity);
-        axisY = createModelData(AXIS_Y);
-        arm1 = createModelData(ARM_1);
-        arm2 = createModelData(ARM_2);
-        arm3 = createModelData(ARM_3);
+        String tierName = GTValues.VN[tier].toLowerCase(Locale.ROOT);
+
+        axisY = createModelData(RobotArmPartialModels.AXIS_Y[tier]);
+        arm1 = createModelData(RobotArmPartialModels.ARM_1[tier]);
+        arm2 = createModelData(RobotArmPartialModels.ARM_2[tier]);
+        arm3 = createModelData(RobotArmPartialModels.ARM_3[tier]);
     }
 
     private ModelData createModelData(PartialModel partialModel) {
@@ -47,7 +51,7 @@ public class RobotArmInstance extends BlockEntityInstance<BlockEntity> implement
 
     @Override
     public void beginFrame() {
-        if (blockEntity instanceof IMachineBlockEntity machineHolder &&  machineHolder.getMetaMachine() instanceof RobotArmMachine robotArm) {
+        if (blockEntity instanceof IMachineBlockEntity machineHolder && machineHolder.getMetaMachine() instanceof RobotArmMachine robotArm) {
             var rotation = robotArm.getArmRotation(AnimationTickHolder.getPartialTicks());
             var axisDegree = rotation.x;
             var arm1Degree = rotation.y;

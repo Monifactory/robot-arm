@@ -48,8 +48,8 @@ public class RobotArmMachine extends TieredMachine implements IFancyUIMachine {
     @Getter
     private ItemStack[] transferredItems;
 
-    public RobotArmMachine(IMachineBlockEntity holder, Object... args) {
-        super(holder, 0); // TODO tier
+    public RobotArmMachine(IMachineBlockEntity holder, int tier, Object... args) {
+        super(holder, tier);
         this.executor = createExecutor(args);
         this.animationTick = 0;
         this.animationDuration = 0;
@@ -81,7 +81,7 @@ public class RobotArmMachine extends TieredMachine implements IFancyUIMachine {
      * @return duration before each action (animation) in ticks.
      */
     public int getCoolDown() {
-        return 12 * 4;
+        return 12 * 16 / (this.tier + 1);
     }
 
     /**

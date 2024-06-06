@@ -8,6 +8,7 @@
     "UCMCoverItemsMixin"
   ],
   "client": [
+    "BlockHighLightRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

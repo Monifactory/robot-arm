@@ -1,0 +1,6 @@
+{
+  "parent": "robot_arm:block/machine/robot_arm/arm_1",
+  "textures": {
+    "0": "robot_arm:block/robot_arm/uiv"
+  }
+}

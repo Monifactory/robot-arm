@@ -1,0 +1,23 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"particle": "robot_arm:block/conveyor_belt/top_off",
+		"top": "robot_arm:block/conveyor_belt/top_off",
+		"side": "robot_arm:block/conveyor_belt/lv/side_off"
+	},
+	"elements": [
+		{
+			"from": [0.25, 5.68626, 11.2721],
+			"to": [15.75, 28.68626, 17.2721],
+			"rotation": {"angle": -45, "axis": "x", "origin": [0.25, 5.68626, 17.2721]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#top"},
+				"east": {"uv": [16, 0, 10, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#top"},
+				"west": {"uv": [10, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [10, 0, 16, 16], "rotation": 90, "texture": "#top"},
+				"down": {"uv": [0, 0, 6, 16], "rotation": 90, "texture": "#top"}
+			}
+		}
+	]
+}

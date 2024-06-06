@@ -1,6 +1,6 @@
 package screret.robotarm.client.renderer;
 
-import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.jozufozu.flywheel.backend.Backend;
 import com.lowdragmc.lowdraglib.LDLib;
@@ -12,9 +12,11 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -25,16 +27,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.ModelData;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 import screret.robotarm.RobotArm;
 import screret.robotarm.machine.RobotArmMachine;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class RobotArmRenderer extends IModelRenderer {
+    public final static ResourceLocation FULL = RobotArm.id("block/machine/robot_arm/robot_arm");
     public final static ResourceLocation BASE = RobotArm.id("block/machine/robot_arm/base");
     public final static ResourceLocation AXIS_Y = RobotArm.id("block/machine/robot_arm/axis_y");
     public final static ResourceLocation ARM_1 = RobotArm.id("block/machine/robot_arm/arm_1");
@@ -45,22 +50,51 @@ public class RobotArmRenderer extends IModelRenderer {
     @OnlyIn(Dist.CLIENT)
     protected Map<ResourceLocation, BakedModel> models;
 
-    public RobotArmRenderer() {
+    private final int tier;
+
+    private final ResourceLocation axis, arm1, arm2, arm3;
+
+    public RobotArmRenderer(int tier) {
         super(BASE);
+        this.tier = tier;
+        String tierName = GTValues.VN[tier].toLowerCase(Locale.ROOT);
+
+        axis = RobotArm.id("block/machine/robot_arm/" + tierName + "/axis_y");
+        arm1 = RobotArm.id("block/machine/robot_arm/" + tierName + "/arm_1");
+        arm2 = RobotArm.id("block/machine/robot_arm/" + tierName + "/arm_2");
+        arm3 = RobotArm.id("block/machine/robot_arm/" + tierName + "/arm_3");
+
         if (LDLib.isClient()) {
             models = new ConcurrentHashMap<>();
         }
+    }
+
+    @Nullable
+    @Override
+    protected BakedModel getItemBakedModel() {
+        if (itemModel == null) {
+            var model = ModelFactory.getUnBakedModel(FULL);
+            if (model instanceof BlockModel blockModel && blockModel.getRootModel() == ModelBakery.GENERATION_MARKER) {
+                // fabric doesn't help us to fix vanilla bakery, so we have to do it ourselves
+                model = ModelFactory.ITEM_MODEL_GENERATOR.generateBlockModel(this::materialMapping, blockModel);
+            }
+            itemModel = model.bake(
+                    ModelFactory.getModeBaker(),
+                    this::materialMapping,
+                    BlockModelRotation.X0_Y0,
+                    modelLocation);
+        }
+        return itemModel;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void onAdditionalModel(Consumer<ResourceLocation> registry) {
         super.onAdditionalModel(registry);
-        registry.accept(AXIS_Y);
-        registry.accept(ARM_1);
-        registry.accept(ARM_2);
-        registry.accept(ARM_3);
-//        registry.accept(ARM_4);
+        registry.accept(axis);
+        registry.accept(arm1);
+        registry.accept(arm2);
+        registry.accept(arm3);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -87,20 +121,25 @@ public class RobotArmRenderer extends IModelRenderer {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void render(BlockEntity blockEntity, float partialTicks, PoseStack stack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        var useInstance = LDLib.isModLoaded("flywheel") && Backend.canUseInstancing(blockEntity.getLevel());
+        var useInstance = LDLib.isModLoaded(RobotArm.MODID_FLYWHEEL) && Backend.canUseInstancing(blockEntity.getLevel());
         if (blockEntity instanceof IMachineBlockEntity machineBlockEntity && machineBlockEntity.getMetaMachine() instanceof RobotArmMachine robotArm) {
             var rotation = robotArm.getArmRotation(partialTicks);
-            renderRobotArm(useInstance, stack, bufferSource, combinedLight, combinedOverlay, rotation.x(), rotation.y(), rotation.z(), rotation.w(), robotArm.getClampRotation(partialTicks), robotArm.getTransferredItems());
+            renderRobotArm(useInstance, stack, bufferSource, combinedLight, combinedOverlay,
+                    rotation.x(), rotation.y(), rotation.z(), rotation.w(), robotArm.getClampRotation(partialTicks),
+                    robotArm.getTransferredItems());
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    protected void renderRobotArm(boolean useInstance, PoseStack stack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay, float axisDegree, float arm1Degree, float arm2Degree, float arm3Degree, float clampDegree, @Nullable ItemStack[] heldStacks) {
+    protected void renderRobotArm(boolean useInstance, PoseStack stack, MultiBufferSource bufferSource,
+                                  int combinedLight, int combinedOverlay,
+                                  float axisDegree, float arm1Degree, float arm2Degree, float arm3Degree, float clampDegree,
+                                  @NotNull ItemStack @Nullable [] heldStacks) {
         var buffer = bufferSource.getBuffer(Sheets.cutoutBlockSheet());
-        var axis = getBakedModel(AXIS_Y);
-        var arm1 = getBakedModel(ARM_1);
-        var arm2 = getBakedModel(ARM_2);
-        var arm3 = getBakedModel(ARM_3);
+        var axis = getBakedModel(this.axis);
+        var arm1 = getBakedModel(this.arm1);
+        var arm2 = getBakedModel(this.arm2);
+        var arm3 = getBakedModel(this.arm3);
 
         stack.pushPose();
         // axis
@@ -128,7 +167,7 @@ public class RobotArmRenderer extends IModelRenderer {
         if (!useInstance) renderBlockModel(stack, buffer, combinedLight, combinedOverlay, arm3);
 
         // clamp
-        // TODO clamp rotation
+        // TODO clamp (the "hand" part) rotation
 //        stack.translate(0.5f, 1 + 5 / 16f, 1f);
 //        stack.mulPose(new Quaternionf().rotateAxis((float) Math.toRadians(clampDegree), 1, 0, 0));
 //        stack.translate(-0.5f, -(1 + 5 / 16f), -1f);
@@ -174,7 +213,7 @@ public class RobotArmRenderer extends IModelRenderer {
         int i = 1;
         if (stack.getCount() > 32) {
             i = 3;
-        } else if (stack.getCount() > 1) {
+        } else if (stack.getCount() > 16) {
             i = 2;
         }
         return i;
