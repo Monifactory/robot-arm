@@ -30,33 +30,33 @@ public class RobotArmModels {
             ModelFile slopeUpOffParent = new ModelFile.ExistingModelFile(RobotArm.id("block/conveyor_belt_up_off"), prov.models().existingFileHelper);
             ModelFile slopeDownOffParent = new ModelFile.ExistingModelFile(RobotArm.id("block/conveyor_belt_down_off"), prov.models().existingFileHelper);
 
-            ModelFile slopeNoneOn = prov.models().getBuilder("conveyor_" + tierName + "_flat_on")
+            ModelFile slopeNoneOn = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/conveyor/" + tierName + "/flat_on")
                     .parent(slopeNoneOnParent)
                     .texture("top", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top"))
                     .texture("side", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/" + tierName + "/side"))
                     .texture("particle", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top_off"));
-            ModelFile slopeUpOn = prov.models().getBuilder("conveyor_" + tierName + "_up_on")
+            ModelFile slopeUpOn = prov.models().getBuilder("conveyor/" + tierName + "/up_on")
                     .parent(slopeUpOnParent)
                     .texture("top", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top"))
                     .texture("side", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/" + tierName + "/side"))
                     .texture("particle", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top_off"));
-            ModelFile slopeDownOn = prov.models().getBuilder("conveyor_" + tierName + "_down_on")
+            ModelFile slopeDownOn = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/conveyor/" + tierName + "/down_on")
                     .parent(slopeDownOnParent)
                     .texture("top", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top"))
                     .texture("side", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/" + tierName + "/side"))
                     .texture("particle", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top_off"));
 
-            ModelFile slopeNoneOff = prov.models().getBuilder("conveyor_" + tierName + "_flat_off")
+            ModelFile slopeNoneOff = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/conveyor/" + tierName + "/flat_off")
                     .parent(slopeNoneOffParent)
                     .texture("top", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top_off"))
                     .texture("side", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/" + tierName + "/side_off"))
                     .texture("particle", "#top");
-            ModelFile slopeUpOff = prov.models().getBuilder("conveyor_" + tierName + "_up_off")
+            ModelFile slopeUpOff = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/conveyor/" + tierName + "/up_off")
                     .parent(slopeUpOffParent)
                     .texture("top", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top_off"))
                     .texture("side", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/" + tierName + "/side_off"))
                     .texture("particle", "#top");
-            ModelFile slopeDownOff = prov.models().getBuilder("conveyor_" + tierName + "_down_off")
+            ModelFile slopeDownOff = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/conveyor/" + tierName + "/down_off")
                     .parent(slopeDownOffParent)
                     .texture("top", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/top_off"))
                     .texture("side", prov.modLoc(ModelProvider.BLOCK_FOLDER + "/conveyor_belt/" + tierName + "/side_off"))
@@ -86,9 +86,9 @@ public class RobotArmModels {
             ModelFile filterOnParent = new ModelFile.ExistingModelFile(RobotArm.id("block/filter_conveyor_belt_on"), prov.models().existingFileHelper);
             ModelFile filterOffParent = new ModelFile.ExistingModelFile(RobotArm.id("block/filter_conveyor_belt_off"), prov.models().existingFileHelper);
 
-            ModelFile filterOn = prov.models().getBuilder("filter_conveyor_" + tierName + "_on")
+            ModelFile filterOn = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/filter_conveyor/" + tierName + "/on")
                     .parent(filterOnParent);
-            ModelFile filterOff = prov.models().getBuilder("filter_conveyor_" + tierName + "_off")
+            ModelFile filterOff = prov.models().getBuilder(ModelProvider.BLOCK_FOLDER + "/filter_conveyor/" + tierName + "/off")
                     .parent(filterOffParent);
 
             prov.getVariantBuilder(ctx.getEntry())

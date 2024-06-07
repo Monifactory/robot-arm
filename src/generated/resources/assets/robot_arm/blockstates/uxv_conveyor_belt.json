@@ -1,93 +1,93 @@
 {
   "variants": {
     "enabled=false,facing=east,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_off",
+      "model": "robot_arm:block/conveyor/uxv/down_off",
       "y": 270
     },
     "enabled=false,facing=east,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_off",
+      "model": "robot_arm:block/conveyor/uxv/flat_off",
       "y": 270
     },
     "enabled=false,facing=east,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_off",
+      "model": "robot_arm:block/conveyor/uxv/up_off",
       "y": 270
     },
     "enabled=false,facing=north,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_off",
+      "model": "robot_arm:block/conveyor/uxv/down_off",
       "y": 180
     },
     "enabled=false,facing=north,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_off",
+      "model": "robot_arm:block/conveyor/uxv/flat_off",
       "y": 180
     },
     "enabled=false,facing=north,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_off",
+      "model": "robot_arm:block/conveyor/uxv/up_off",
       "y": 180
     },
     "enabled=false,facing=south,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_off"
+      "model": "robot_arm:block/conveyor/uxv/down_off"
     },
     "enabled=false,facing=south,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_off"
+      "model": "robot_arm:block/conveyor/uxv/flat_off"
     },
     "enabled=false,facing=south,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_off"
+      "model": "robot_arm:block/conveyor/uxv/up_off"
     },
     "enabled=false,facing=west,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_off",
+      "model": "robot_arm:block/conveyor/uxv/down_off",
       "y": 90
     },
     "enabled=false,facing=west,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_off",
+      "model": "robot_arm:block/conveyor/uxv/flat_off",
       "y": 90
     },
     "enabled=false,facing=west,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_off",
+      "model": "robot_arm:block/conveyor/uxv/up_off",
       "y": 90
     },
     "enabled=true,facing=east,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_on",
+      "model": "robot_arm:block/conveyor/uxv/down_on",
       "y": 270
     },
     "enabled=true,facing=east,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_on",
+      "model": "robot_arm:block/conveyor/uxv/flat_on",
       "y": 270
     },
     "enabled=true,facing=east,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_on",
+      "model": "robot_arm:conveyor/uxv/up_on",
       "y": 270
     },
     "enabled=true,facing=north,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_on",
+      "model": "robot_arm:block/conveyor/uxv/down_on",
       "y": 180
     },
     "enabled=true,facing=north,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_on",
+      "model": "robot_arm:block/conveyor/uxv/flat_on",
       "y": 180
     },
     "enabled=true,facing=north,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_on",
+      "model": "robot_arm:conveyor/uxv/up_on",
       "y": 180
     },
     "enabled=true,facing=south,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_on"
+      "model": "robot_arm:block/conveyor/uxv/down_on"
     },
     "enabled=true,facing=south,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_on"
+      "model": "robot_arm:block/conveyor/uxv/flat_on"
     },
     "enabled=true,facing=south,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_on"
+      "model": "robot_arm:conveyor/uxv/up_on"
     },
     "enabled=true,facing=west,slope=down": {
-      "model": "robot_arm:block/conveyor_uxv_down_on",
+      "model": "robot_arm:block/conveyor/uxv/down_on",
       "y": 90
     },
     "enabled=true,facing=west,slope=none": {
-      "model": "robot_arm:block/conveyor_uxv_flat_on",
+      "model": "robot_arm:block/conveyor/uxv/flat_on",
       "y": 90
     },
     "enabled=true,facing=west,slope=up": {
-      "model": "robot_arm:block/conveyor_uxv_up_on",
+      "model": "robot_arm:conveyor/uxv/up_on",
       "y": 90
     }
   }

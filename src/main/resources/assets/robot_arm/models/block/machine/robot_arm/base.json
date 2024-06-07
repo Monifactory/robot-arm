@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
 	"textures": {
 		"0": "robot_arm:block/robot_arm",
 		"particle": "robot_arm:block/robot_arm"
@@ -10,12 +10,12 @@
 			"to": [14, 2, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
 			"faces": {
-				"north": {"uv": [10, 9, 16, 10], "texture": "#0"},
-				"east": {"uv": [10, 9, 16, 10], "texture": "#0"},
-				"south": {"uv": [10, 9, 16, 10], "texture": "#0"},
-				"west": {"uv": [10, 9, 16, 10], "texture": "#0"},
-				"up": {"uv": [10, 10, 16, 16], "texture": "#0"},
-				"down": {"uv": [10, 10, 16, 16], "texture": "#0"}
+				"north": {"uv": [5.75, 2, 8.75, 2.5], "texture": "#0"},
+				"east": {"uv": [5.75, 2, 8.75, 2.5], "texture": "#0"},
+				"south": {"uv": [5.75, 2, 8.75, 2.5], "texture": "#0"},
+				"west": {"uv": [5.75, 2, 8.75, 2.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"down": {"uv": [0, 0, 3, 3], "texture": "#0"}
 			}
 		}
 	],

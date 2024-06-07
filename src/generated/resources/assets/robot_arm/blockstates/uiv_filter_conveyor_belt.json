@@ -1,93 +1,93 @@
 {
   "variants": {
     "enabled=false,facing=east,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 270
     },
     "enabled=false,facing=east,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 270
     },
     "enabled=false,facing=east,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 270
     },
     "enabled=false,facing=north,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 180
     },
     "enabled=false,facing=north,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 180
     },
     "enabled=false,facing=north,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 180
     },
     "enabled=false,facing=south,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off"
+      "model": "robot_arm:block/filter_conveyor/uiv/off"
     },
     "enabled=false,facing=south,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off"
+      "model": "robot_arm:block/filter_conveyor/uiv/off"
     },
     "enabled=false,facing=south,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off"
+      "model": "robot_arm:block/filter_conveyor/uiv/off"
     },
     "enabled=false,facing=west,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 90
     },
     "enabled=false,facing=west,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 90
     },
     "enabled=false,facing=west,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_off",
+      "model": "robot_arm:block/filter_conveyor/uiv/off",
       "y": 90
     },
     "enabled=true,facing=east,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 270
     },
     "enabled=true,facing=east,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 270
     },
     "enabled=true,facing=east,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 270
     },
     "enabled=true,facing=north,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 180
     },
     "enabled=true,facing=north,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 180
     },
     "enabled=true,facing=north,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 180
     },
     "enabled=true,facing=south,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on"
+      "model": "robot_arm:block/filter_conveyor/uiv/on"
     },
     "enabled=true,facing=south,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on"
+      "model": "robot_arm:block/filter_conveyor/uiv/on"
     },
     "enabled=true,facing=south,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on"
+      "model": "robot_arm:block/filter_conveyor/uiv/on"
     },
     "enabled=true,facing=west,output_mode=left_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 90
     },
     "enabled=true,facing=west,output_mode=normal": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 90
     },
     "enabled=true,facing=west,output_mode=right_front": {
-      "model": "robot_arm:block/filter_conveyor_uiv_on",
+      "model": "robot_arm:block/filter_conveyor/uiv/on",
       "y": 90
     }
   }
