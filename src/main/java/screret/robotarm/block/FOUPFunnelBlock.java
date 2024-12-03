@@ -1,7 +1,7 @@
 package screret.robotarm.block;
 
 import com.google.common.collect.Maps;
-import com.gregtechceu.gtceu.api.block.RendererBlock;
+import com.lowdragmc.lowdraglib.client.renderer.block.RendererBlock;
 import com.lowdragmc.lowdraglib.gui.factory.BlockEntityUIFactory;
 import com.lowdragmc.lowdraglib.utils.ShapeUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;

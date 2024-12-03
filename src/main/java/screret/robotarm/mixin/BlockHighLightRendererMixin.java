@@ -21,6 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,19 +53,20 @@ public abstract class BlockHighLightRendererMixin {
                                                                   @Local LocalPlayer player,
                                                                   @Local ItemStack held,
                                                                   @Local BlockPos blockPos,
+                                                                  @Local BlockState blockState,
                                                                   @Local Set<GTToolType> toolTypes) {
         Block block = level.getBlockState(blockPos).getBlock();
         if (block instanceof IToolGridHighLight gridHighLight) {
             Vec3 pos = camera.getPosition();
             poseStack.pushPose();
             poseStack.translate(-pos.x, -pos.y, -pos.z);
-            if (gridHighLight.shouldRenderGrid(player, held, toolTypes)) {
+            if (gridHighLight.shouldRenderGrid(player, blockPos, blockState, held, toolTypes)) {
                 var buffer = multiBufferSource.getBuffer(RenderType.lines());
                 RenderSystem.lineWidth(3);
-                drawGridOverlays(poseStack, buffer, target, side -> gridHighLight.sideTips(player, toolTypes, side));
+                drawGridOverlays(poseStack, buffer, target, side -> gridHighLight.sideTips(player, blockPos, blockState, toolTypes, side));
             } else {
                 var facing = target.getDirection();
-                var texture = gridHighLight.sideTips(player, toolTypes, facing);
+                var texture = gridHighLight.sideTips(player, blockPos, blockState, toolTypes, facing);
                 if (texture != null) {
                     RenderSystem.disableDepthTest();
                     RenderSystem.enableBlend();
