@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import screret.robotarm.block.ConveyorBeltBlock;
@@ -39,6 +40,7 @@ import screret.robotarm.util.SidedItemHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Objects;
+import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -221,10 +223,10 @@ public class ConveyorBeltBlockEntity extends BlockEntity implements IEnhancedMan
         BlockPos offset = slope.getOffsetPos(worldPosition.relative(direction));
         ConveyorBeltBlockEntity conveyorBlockEntityInfront = getConveyorBlockEntityAt(level, offset);
         if (conveyorBlockEntityInfront == null) {
-            IItemTransfer transfer = ItemTransferHelperImpl.getItemTransfer(this.level, offset, direction.getOpposite());
-            if (transfer != null) {
+            Optional<IItemHandler> transfer = GTTransferUtils.getItemHandler(this.level, offset, direction.getOpposite()).resolve();
+            if (transfer.isPresent()) {
                 ItemStack currentStack = this.items.getStackInSlot(fromSlot);
-                GTTransferUtils.insertItem(transfer, this.items.extractItem(fromSlot, currentStack.getCount(), false), false);
+                GTTransferUtils.insertItem(transfer.get(), this.items.extractItem(fromSlot, currentStack.getCount(), false), false);
                 return true;
             }
 

@@ -1,7 +1,9 @@
 package screret.robotarm.block;
 
 import com.google.common.collect.Maps;
-import com.lowdragmc.lowdraglib.client.renderer.block.RendererBlock;
+import com.gregtechceu.gtceu.api.block.AppearanceBlock;
+import com.lowdragmc.lowdraglib.client.renderer.IBlockRendererProvider;
+import com.lowdragmc.lowdraglib.client.renderer.IRenderer;
 import com.lowdragmc.lowdraglib.gui.factory.BlockEntityUIFactory;
 import com.lowdragmc.lowdraglib.utils.ShapeUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -43,14 +45,14 @@ import java.util.Map;
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class FOUPFunnelBlock extends RendererBlock implements EntityBlock {
+public class FOUPFunnelBlock extends AppearanceBlock implements EntityBlock, IBlockRendererProvider {
     public static final VoxelShape SHAPE = Shapes.or(box(0, 1, 0, 16, 2, 16), box(2, 0, 2, 14, 1, 14));
     private final Map<Direction, VoxelShape> SHAPE_BY_DIRECTION;
 
     public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.DOWN);
 
     public FOUPFunnelBlock(Properties properties) {
-        super(properties, FOUPFunnelRenderer.INSTANCE);
+        super(properties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN));
         this.SHAPE_BY_DIRECTION = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
             map.put(Direction.NORTH, ShapeUtils.rotate(ShapeUtils.rotate(SHAPE, new Vector3f(1, 0, 0), 90),
@@ -104,5 +106,11 @@ public class FOUPFunnelBlock extends RendererBlock implements EntityBlock {
             BlockEntityUIFactory.INSTANCE.openUI(funnel, serverPlayer);
         }
         return InteractionResult.sidedSuccess(world.isClientSide);
+    }
+
+    @Nullable
+    @Override
+    public IRenderer getRenderer(BlockState state) {
+        return FOUPFunnelRenderer.INSTANCE;
     }
 }
