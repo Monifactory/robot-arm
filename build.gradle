@@ -106,7 +106,7 @@ dependencies {
         it.officialMojangMappings { nameSyntheticMembers = false }
     }
 
-    modImplementation("curse.maven:ulv-covers-modern-984851:5323766")
+    modImplementation("curse.maven:ulv-covers-modern-984851:5902895")
 
     modImplementation("com.jozufozu.flywheel:flywheel-forge-$project.minecraft_version:0.6.9-5")
 
