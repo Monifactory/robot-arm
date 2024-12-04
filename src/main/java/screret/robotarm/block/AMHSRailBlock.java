@@ -7,7 +7,7 @@ import com.gregtechceu.gtceu.api.capability.IToolable;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
-import com.gregtechceu.gtceu.api.item.tool.IToolGridHighLight;
+import com.gregtechceu.gtceu.api.item.tool.IToolGridHighlight;
 import com.gregtechceu.gtceu.api.item.tool.ToolHelper;
 import com.gregtechceu.gtceu.api.pipenet.Node;
 import com.lowdragmc.lowdraglib.LDLib;
@@ -29,7 +29,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -53,7 +52,7 @@ import static screret.robotarm.pipenet.amhs.RailConnection.*;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public abstract class AMHSRailBlock extends AppearanceBlock implements IBlockRendererProvider, IToolGridHighLight, IToolable {
+public abstract class AMHSRailBlock extends AppearanceBlock implements IBlockRendererProvider, IToolGridHighlight, IToolable {
     public static final EnumProperty<Direction> DIRECTION = EnumProperty.create("direction", Direction.class, Direction.SOUTH, Direction.NORTH, Direction.EAST, Direction.WEST);
 
     public final AMHSRailType railType;
@@ -186,32 +185,28 @@ public abstract class AMHSRailBlock extends AppearanceBlock implements IBlockRen
     //*******     Interaction    *******//
     //////////////////////////////////////
 
-//    @Override
-//    public boolean shouldRenderGrid(Player player, ItemStack held, Set<GTToolType> toolTypes) {
-//        return canToolTunePipe(toolTypes);
-//    }
+    @Override
+    public boolean shouldRenderGrid(Player player, BlockPos pos, BlockState state, ItemStack held, Set<GTToolType> toolTypes) {
+        return canToolTunePipe(toolTypes);
+    }
 
-//    @Override
-//    public @Nullable ResourceTexture sideTips(Player player, Set<GTToolType> toolTypes, Direction side) {
-//        // TODO PR a fix for this to GT.
-//        // https://github.com/GregTechCEu/GregTech-Modern/commit/e5290184f50fc023e6cb7f3c1c37ced42d01e826#diff-f4c2196e86f1117d2253d0f96351ada468b0687a5415b5d083843e87e73e5b5bR18
-//        /*
-//        if (canToolTunePipe(toolTypes) && side.getAxis() != Direction.Axis.Y) {
-//            if (player.isCrouching()) {
-//                var direction = getRailDirection(state);
-//                if (direction != side) {
-//                    return GuiTextures.TOOL_FRONT_FACING_ROTATION;
-//                }
-//            } else {
-//                var direction = getRailDirection(state);
-//                if(side.getAxis() != direction.getAxis()) {
-//                    return GuiTextures.TOOL_IO_FACING_ROTATION;
-//                }
-//            }
-//        }
-//        */
-//        return null;
-//    }
+    @Override
+    public @Nullable ResourceTexture sideTips(Player player, BlockPos pos, BlockState state, Set<GTToolType> toolTypes, Direction side) {
+        if (canToolTunePipe(toolTypes) && side.getAxis() != Direction.Axis.Y) {
+            if (player.isCrouching()) {
+                var direction = getRailDirection(state);
+                if (direction != side) {
+                    return GuiTextures.TOOL_FRONT_FACING_ROTATION;
+                }
+            } else {
+                var direction = getRailDirection(state);
+                if(side.getAxis() != direction.getAxis()) {
+                    return GuiTextures.TOOL_IO_FACING_ROTATION;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
